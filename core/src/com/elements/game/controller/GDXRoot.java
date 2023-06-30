@@ -1,4 +1,4 @@
-package com.elements.game.controllers;
+package com.elements.game.controller;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;

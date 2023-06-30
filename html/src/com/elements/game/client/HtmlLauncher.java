@@ -3,7 +3,7 @@ package com.elements.game.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.elements.game.controllers.GDXRoot;
+import com.elements.game.controller.GDXRoot;
 
 public class HtmlLauncher extends GwtApplication {
 
