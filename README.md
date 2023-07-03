@@ -27,3 +27,20 @@
 
 ### Windows Instructions
 1. to be added, it should be very similar to Mac (or same ?) I need to verify on a windows.
+
+## Development Setup
+Please see the `ProjectConventions.xml` file in the root folder. To enable consistent formatting,
+you need to import this file in your project preferences.
+1. Open preferences
+2. Find and open Code Style
+3. Click on Scheme dropdown and Make sure "Project" is selected and not default (unless you 
+   prefer these settings to apply everywhere).
+4. Click on Setting Gear icon dropdown next to Scheme dropdown
+5. Import scheme and find the `ProjectConventions.xml` file.
+6. Apply changes and Click 'OK' to exit.
+
+## Contributors
+- Zhiyuan Chen (Programmer, Lead)
+- Wilson Zhang (Programmer, Designer)
+- Bairu Li (Programmer, Designer)
+- Terry Xu (Artist, Designer)
