@@ -4,6 +4,7 @@
   <option name="ENABLE_SECOND_REFORMAT" value="true" />
   <option name="SOFT_MARGINS" value="100" />
   <JSON>
+    <option name="KEEP_TRAILING_COMMA" value="true" />
     <option name="ARRAY_WRAPPING" value="1" />
   </JSON>
   <JavaCodeStyleSettings>
@@ -14,27 +15,14 @@
     <option name="KEEP_LINE_BREAKS" value="false" />
     <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />
     <option name="BLANK_LINES_AROUND_FIELD" value="1" />
+    <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
     <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
+    <option name="CALL_PARAMETERS_WRAP" value="1" />
+    <option name="METHOD_CALL_CHAIN_WRAP" value="1" />
     <option name="KEEP_SIMPLE_BLOCKS_IN_ONE_LINE" value="true" />
     <option name="KEEP_SIMPLE_METHODS_IN_ONE_LINE" value="true" />
     <option name="KEEP_SIMPLE_CLASSES_IN_ONE_LINE" value="true" />
     <option name="WRAP_COMMENTS" value="true" />
-    <arrangement>
-      <groups>
-        <group>
-          <type>GETTERS_AND_SETTERS</type>
-          <order>KEEP</order>
-        </group>
-        <group>
-          <type>OVERRIDDEN_METHODS</type>
-          <order>BY_NAME</order>
-        </group>
-        <group>
-          <type>DEPENDENT_METHODS</type>
-          <order>BREADTH_FIRST</order>
-        </group>
-      </groups>
-    </arrangement>
   </codeStyleSettings>
   <codeStyleSettings language="JSON">
     <option name="KEEP_LINE_BREAKS" value="false" />
