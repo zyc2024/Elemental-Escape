@@ -1,0 +1,33 @@
+{
+  "textures": {
+    "game:background": "gameplay/example.jpeg",
+    "transition:black": "transitions/black.png",
+    "cutscene:scene2_frame1": "template_scenes/frame1.png",
+    "cutscene:scene2_frame2": "template_scenes/frame2.png",
+    "cutscene:scene2_frame3": "template_scenes/frame3.png",
+    "cutscene:scene2_frame4": "template_scenes/frame4.png",
+    "cutscene:scene2_frame5": "template_scenes/frame5.png",
+    "cutscene:scene2_frame6": "template_scenes/frame6.png",
+    "cutscene:scene2_frame7": "template_scenes/frame7.png",
+    "cutscene:scene2_frame8": "template_scenes/frame8.png",
+    "cutscene:scene2_frame9": "template_scenes/frame9.png",
+    "cutscene:scene2_frame10": "template_scenes/frame10.png",
+    "cutscene:scene2_frame1s": "template_scenes/frame1s.png",
+    "cutscene:scene2_frame2s": "template_scenes/frame2s.png",
+    "cutscene:scene2_frame3s": "template_scenes/frame3s.png",
+    "cutscene:scene2_frame4s": "template_scenes/frame4s.png",
+    "cutscene:scene2_frame5s": "template_scenes/frame5s.png",
+    "cutscene:scene2_frame6s": "template_scenes/frame6s.png",
+    "cutscene:scene2_frame7s": "template_scenes/frame7s.png"
+  },
+  "music" : {
+    "music:menu": "template_music/menu.wav",
+    "music:droplets": "template_music/droplets.wav",
+    "music:the_storm": "template_music/the_storm.wav",
+    "music:over_the_cliffs": "template_music/over_the_cliffs.wav",
+    "music:a_world_of_clouds": "template_music/a_world_of_clouds.wav",
+    "music:exploring_the_forest": "template_music/exploring_the_forest.wav",
+    "music:victory": "template_music/victory.wav",
+    "music:game_over": "template_music/game_over.wav"
+  }
+}

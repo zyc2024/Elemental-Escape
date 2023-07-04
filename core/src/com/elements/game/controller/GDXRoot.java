@@ -1,31 +1,104 @@
 package com.elements.game.controller;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.elements.game.utility.assets.AssetDirectory;
+import com.elements.game.view.GameCanvas;
+import com.elements.game.view.screen.GameScreen;
+import com.elements.game.view.screen.GameplayScreen;
+import com.elements.game.view.screen.LoadingScreen;
+import com.elements.game.view.screen.TransitionalScreen;
 
-public class GDXRoot extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-	}
+public class GDXRoot extends Game {
 
-	@Override
-	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
-	}
+    private AssetDirectory assetDirectory;
+
+    private GameScreen activeScreen;
+
+    private LoadingScreen loadingScreen;
+    private GameplayScreen gameplayScreen;
+
+    private TransitionalScreen transitionScreen;
+
+    private GameCanvas canvas;
+
+    /**
+     * Sets the current screen, {@link Screen#hide()} is called on any old screen, and
+     * {@link Screen#show()} is called on the new screen, if any. The active screen is updated.
+     *
+     * @param screen game screen
+     */
+    public void setScreen(GameScreen screen) {
+        activeScreen = screen;
+        super.setScreen(screen);
+    }
+
+    @Override
+    public void create() {
+        canvas = new GameCanvas();
+        loadingScreen = new LoadingScreen("catalog/assets.json", canvas, 1);
+        gameplayScreen = new GameplayScreen(canvas);
+        transitionScreen = new TransitionalScreen(canvas);
+        setScreen(loadingScreen);
+    }
+
+    @Override
+    public void render() {
+        super.render();
+        if (activeScreen != null && activeScreen.shouldExit()) {
+            // it is time to switch screens or quit game
+            switchScreen(activeScreen, activeScreen.exitCode());
+        }
+    }
+
+    @Override
+    public void dispose() {
+        loadingScreen.dispose();
+        loadingScreen = null;
+        if (assetDirectory != null){
+            assetDirectory.unloadAssets();
+            assetDirectory.dispose();
+        }
+        assetDirectory = null;
+        gameplayScreen.dispose();
+        gameplayScreen = null;
+    }
+
+    /**
+     * exit the given screen and apply transitions to exit/other screens.
+     * @param screen screen to exit
+     * @param exitCode associated exit code
+     */
+    private void switchScreen(Screen screen, int exitCode) {
+        if (screen == loadingScreen){
+            assetDirectory = loadingScreen.getAssets();
+            // shift focus to another screen
+            gameplayScreen.gatherAssets(assetDirectory);
+            transitionScreen.gatherAssets(assetDirectory);
+            transitionScreen.setTransition(loadingScreen, gameplayScreen);
+            setScreen(transitionScreen);
+        }
+        else if (screen == gameplayScreen){
+            switch (exitCode){
+                case GameplayScreen.EXIT_GAME:
+                    Gdx.app.exit();
+                    break;
+                case 11010001:
+                    // just some random number
+                default:
+                    break;
+            }
+        }
+        else if (screen == transitionScreen){
+            setScreen(transitionScreen.getEnterScreen());
+        }
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        Gdx.gl.glViewport(0, 0,width, height);
+        canvas.resize();
+        super.resize(width, height);
+    }
 }

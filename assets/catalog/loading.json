@@ -1,0 +1,11 @@
+{
+  "textures": {
+    "throbber": "loading/example.jpeg"
+  },
+  "fonts": {
+    "progressFont": {
+      "file": "loading/Hexenkoetel-qZRv1.ttf",
+      "size": 30
+    }
+  }
+}

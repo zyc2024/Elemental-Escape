@@ -13,4 +13,14 @@ public class PauseScreen extends GameScreen {
     public void dispose() {
 
     }
+
+    @Override
+    public boolean shouldExit() {
+        return false;
+    }
+
+    @Override
+    public int exitCode() {
+        return 0;
+    }
 }

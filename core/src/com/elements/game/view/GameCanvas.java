@@ -946,7 +946,8 @@ public class GameCanvas {
      * @param font   The font to use
      * @param offset The y-value offset from the center of the screen.
      */
-    public void drawTextCentered(String text, BitmapFont font, float offset) {
+    public void drawTextCentered(String text, BitmapFont font, float offset, float screenWidth,
+                                 float screenHeight) {
         if (active != DrawPass.STANDARD) {
             Gdx.app.error("GameCanvas", "Cannot draw without active begin()",
                     new IllegalStateException());
@@ -954,8 +955,8 @@ public class GameCanvas {
         }
 
         GlyphLayout layout = new GlyphLayout(font, text);
-        float x = (getWidth() - layout.width) / 2.0f;
-        float y = (getHeight() + layout.height) / 2.0f;
+        float x = (screenWidth - layout.width) / 2.0f;
+        float y = (screenHeight + layout.height) / 2.0f;
         font.draw(spriteBatch, layout, x, y + offset);
     }
     // END-REGION ================== STANDARD-DRAW =============================

@@ -5,15 +5,18 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.*;
+import com.elements.game.utility.assets.AssetDirectory;
 
 /**
- * A GameScreen provides basic functionality to read user input and manage
- * screen statuses/transitions in application.
+ * A GameScreen provides basic functionality to read user input and manage screen
+ * statuses/transitions in application.
  * <br>
  * All Game Screens must implement the following set of methods:
  * <ul>
  *     <li>Dispose() : </li>
- *     <li>Render(float dt)</li>
+ *     <li>Render(float deltaTime)</li>
+ *     <li>shouldExit()</li>
+ *     <li>exitCode()</li>
  * </ul>
  */
 public abstract class GameScreen implements Screen, InputProcessor {
@@ -22,48 +25,39 @@ public abstract class GameScreen implements Screen, InputProcessor {
 
     protected Viewport viewport;
 
-    /**
-     * Available Viewport options based on Viewport class hierarchy
-     */
-    public enum ViewportType {
-        FIT, EXTEND, FILL, STRETCH
-    }
+    protected int exitCode;
 
     /**
-     * Constructs a screen with the given viewport settings and camera. The
-     * virtual dimensions set up a rectangular region in which the physical
-     * game world can be rendered on.
+     * Constructs a screen with the given viewport settings and camera. The virtual dimensions set
+     * up a rectangular region in which the physical game world can be rendered on.
      *
      * @param vt            viewport type
      * @param camera        rendering camera (typically orthographic)
      * @param virtualWidth  (virtual world width)
      * @param virtualHeight (virtual world height)
      */
-    public GameScreen(ViewportType vt, OrthographicCamera camera,
-                      int virtualWidth, int virtualHeight) {
-        switch (vt) {
-            case FIT:
-                viewport = new FitViewport(virtualWidth, virtualHeight, camera);
-                break;
-            case EXTEND:
-                viewport = new ExtendViewport(virtualWidth, virtualHeight,
-                        camera);
-                break;
-            case FILL:
-                viewport = new FillViewport(virtualWidth, virtualHeight,
-                        camera);
-                break;
-            case STRETCH:
-                viewport = new StretchViewport(virtualWidth, virtualHeight,
-                        camera);
-                break;
-        }
+    public GameScreen(ViewportType vt, OrthographicCamera camera, int virtualWidth, int virtualHeight) {
         if (camera != null) {
             this.camera = camera;
         } else {
             this.camera = new OrthographicCamera(virtualWidth, virtualHeight);
-            viewport.setCamera(this.camera);
+            this.camera.setToOrtho(false);
         }
+        switch (vt) {
+            case FIT:
+                viewport = new FitViewport(virtualWidth, virtualHeight, this.camera);
+                break;
+            case EXTEND:
+                viewport = new ExtendViewport(virtualWidth, virtualHeight, this.camera);
+                break;
+            case FILL:
+                viewport = new FillViewport(virtualWidth, virtualHeight, this.camera);
+                break;
+            case STRETCH:
+                viewport = new StretchViewport(virtualWidth, virtualHeight, this.camera);
+                break;
+        }
+        viewport.apply(true);
     }
 
     /**
@@ -78,9 +72,8 @@ public abstract class GameScreen implements Screen, InputProcessor {
     }
 
     /**
-     * Constructs a screen with the given viewport settings. The
-     * viewport dimensions set up a virtual rectangular region in which the
-     * physical game world can be rendered on.
+     * Constructs a screen with the given viewport settings. The viewport dimensions set up a
+     * virtual rectangular region in which the physical game world can be rendered on.
      *
      * @param vt             viewport type
      * @param viewportWidth  viewport world width (virtual)
@@ -93,58 +86,55 @@ public abstract class GameScreen implements Screen, InputProcessor {
     /**
      * Construct a 1600x900 resolution screen with letter-boxing (FitViewport).
      */
-    public GameScreen(){
+    public GameScreen() {
         this(ViewportType.FIT, 1600, 900);
     }
 
-
-    // BEGIN-REGION ============== INPUT-PROCESSOR =============================
     @Override
     public boolean keyDown(int keycode) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean keyTyped(char character) {
-        return false;
+        return true;
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer,
-                             int button) {
-        return false;
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean scrolled(float amountX, float amountY) {
-        return false;
+        return true;
     }
-    // END-REGION ================ INPUT-PROCESSOR =============================
 
-
-    // BEGIN-REGION ============== LIBGDX SCREEN ===============================
     @Override
-    public void resize(int width, int height) {}
+    public void resize(int width, int height) {
+        viewport.update(width, height);
+        viewport.apply();
+    }
 
     /**
      * This is called when the application is minimized (hidden)
@@ -168,5 +158,28 @@ public abstract class GameScreen implements Screen, InputProcessor {
     public void hide() {
         Gdx.input.setInputProcessor(null);
     }
-    // END-REGION ================ LIBGDX SCREEN ===============================
+
+    /**
+     * @return whether this screen should return control of the view
+     */
+    public abstract boolean shouldExit();
+
+    /**
+     * @return the exit status code
+     */
+    public int exitCode() {return exitCode;}
+
+    /**
+     * stores and initializes all necessary assets (textures, fonts, audio) for this game screen.
+     *
+     * @param assets an asset manager
+     */
+    public void gatherAssets(AssetDirectory assets) {}
+
+    /**
+     * Available Viewport options based on Viewport class hierarchy
+     */
+    public enum ViewportType {
+        FIT, EXTEND, FILL, STRETCH
+    }
 }
