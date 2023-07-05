@@ -2,12 +2,16 @@ package com.elements.game.view.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.video.VideoPlayer;
+import com.badlogic.gdx.video.VideoPlayerCreator;
 import com.elements.game.utility.assets.AssetDirectory;
 import com.elements.game.view.GameCanvas;
+
+import java.io.FileNotFoundException;
 
 public class GameplayScreen extends GameScreen {
 
@@ -22,6 +26,10 @@ public class GameplayScreen extends GameScreen {
 
     private int exitCode;
 
+    private boolean playVideo;
+
+    private VideoPlayer videoPlayer;
+
     public GameplayScreen(GameCanvas canvas) {
         this.canvas = canvas;
     }
@@ -29,6 +37,19 @@ public class GameplayScreen extends GameScreen {
     @Override
     public void gatherAssets(AssetDirectory assets) {
         background = new TextureRegion(assets.getEntry("game:background", Texture.class));
+        videoPlayer = VideoPlayerCreator.createVideoPlayer();
+        videoPlayer.setOnCompletionListener(new VideoPlayer.CompletionListener() {
+            @Override
+            public void onCompletionListener(FileHandle file) {
+                // video finished
+            }
+        });
+
+        try {
+            videoPlayer.play(Gdx.files.internal("v.webm"));
+        } catch (FileNotFoundException e) {
+            Gdx.app.error("gdx-video", "video file cannot be loaded");
+        }
     }
 
     @Override
@@ -36,11 +57,18 @@ public class GameplayScreen extends GameScreen {
         canvas.clear();
         viewport.apply(true);
         canvas.begin(camera);
-        float scaleX = viewport.getWorldWidth() / background.getRegionWidth();
-        float scaleY = viewport.getWorldHeight() / background.getRegionHeight();
-        canvas.draw(background, Color.WHITE, background.getRegionWidth() / 2f,
-                    background.getRegionHeight() / 2f, camera.position.x, camera.position.y, 0,
-                    scaleX, scaleY);
+        if (playVideo) {
+            videoPlayer.update();
+            Texture frame = videoPlayer.getTexture();
+            if (frame != null) canvas.draw(frame, Color.WHITE, 0, 0, viewport.getWorldWidth(),
+                                           viewport.getWorldHeight());
+        } else {
+            float scaleX = viewport.getWorldWidth() / background.getRegionWidth();
+            float scaleY = viewport.getWorldHeight() / background.getRegionHeight();
+            canvas.draw(background, Color.WHITE, background.getRegionWidth() / 2f,
+                        background.getRegionHeight() / 2f, camera.position.x, camera.position.y, 0,
+                        scaleX, scaleY);
+        }
         canvas.end();
     }
 
@@ -49,6 +77,7 @@ public class GameplayScreen extends GameScreen {
         viewport = null;
         camera = null;
         background = null;
+        videoPlayer.dispose();
     }
 
     @Override
@@ -68,5 +97,11 @@ public class GameplayScreen extends GameScreen {
             shouldExit = true;
         }
         return true;
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        this.playVideo = true;
     }
 }
