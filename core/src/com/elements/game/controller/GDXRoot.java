@@ -19,7 +19,7 @@ public class GDXRoot extends Game {
     private LoadingScreen loadingScreen;
     private GameplayScreen gameplayScreen;
 
-    private TransitionalScreen transitionScreen;
+    //private TransitionalScreen transitionScreen;
 
     private GameCanvas canvas;
 
@@ -39,7 +39,7 @@ public class GDXRoot extends Game {
         canvas = new GameCanvas();
         loadingScreen = new LoadingScreen("catalog/assets.json", canvas, 1);
         gameplayScreen = new GameplayScreen(canvas);
-        transitionScreen = new TransitionalScreen(canvas);
+        //transitionScreen = new TransitionalScreen(canvas);
         setScreen(loadingScreen);
     }
 
@@ -75,9 +75,10 @@ public class GDXRoot extends Game {
             assetDirectory = loadingScreen.getAssets();
             // shift focus to another screen
             gameplayScreen.gatherAssets(assetDirectory);
-            transitionScreen.gatherAssets(assetDirectory);
-            transitionScreen.setTransition(loadingScreen, gameplayScreen);
-            setScreen(transitionScreen);
+            //transitionScreen.gatherAssets(assetDirectory);
+            //transitionScreen.setTransition(loadingScreen, gameplayScreen);
+            //setScreen(transitionScreen);
+            setScreen(gameplayScreen);
         }
         else if (screen == gameplayScreen){
             switch (exitCode){
@@ -90,9 +91,9 @@ public class GDXRoot extends Game {
                     break;
             }
         }
-        else if (screen == transitionScreen){
-            setScreen(transitionScreen.getEnterScreen());
-        }
+//        else if (screen == transitionScreen){
+//            setScreen(transitionScreen.getEnterScreen());
+//        }
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.video.VideoPlayer;
 import com.badlogic.gdx.video.VideoPlayerCreator;
+import com.elements.game.controller.InputController;
 import com.elements.game.utility.assets.AssetDirectory;
 import com.elements.game.view.GameCanvas;
 
@@ -22,13 +23,13 @@ public class GameplayScreen extends GameScreen {
 
     private TextureRegion background;
 
+    private TextureRegion playerTexture;
+
+    private InputController inputController;
+
     private boolean shouldExit;
 
     private int exitCode;
-
-    private boolean playVideo;
-
-    private VideoPlayer videoPlayer;
 
     public GameplayScreen(GameCanvas canvas) {
         this.canvas = canvas;
@@ -37,38 +38,32 @@ public class GameplayScreen extends GameScreen {
     @Override
     public void gatherAssets(AssetDirectory assets) {
         background = new TextureRegion(assets.getEntry("game:background", Texture.class));
-        videoPlayer = VideoPlayerCreator.createVideoPlayer();
-        videoPlayer.setOnCompletionListener(new VideoPlayer.CompletionListener() {
-            @Override
-            public void onCompletionListener(FileHandle file) {
-                // video finished
-            }
-        });
+        playerTexture = new TextureRegion(assets.getEntry("game:player", Texture.class));
+    }
 
-        try {
-            videoPlayer.play(Gdx.files.internal("v.webm"));
-        } catch (FileNotFoundException e) {
-            Gdx.app.error("gdx-video", "video file cannot be loaded");
-        }
+    void update(float delta){
+        // here, game objects are updated, such as enemy directions
+        // win/lose state
     }
 
     @Override
     public void render(float delta) {
+        update(delta);
         canvas.clear();
         viewport.apply(true);
         canvas.begin(camera);
-        if (playVideo) {
-            videoPlayer.update();
-            Texture frame = videoPlayer.getTexture();
-            if (frame != null) canvas.draw(frame, Color.WHITE, 0, 0, viewport.getWorldWidth(),
-                                           viewport.getWorldHeight());
-        } else {
-            float scaleX = viewport.getWorldWidth() / background.getRegionWidth();
-            float scaleY = viewport.getWorldHeight() / background.getRegionHeight();
-            canvas.draw(background, Color.WHITE, background.getRegionWidth() / 2f,
-                        background.getRegionHeight() / 2f, camera.position.x, camera.position.y, 0,
-                        scaleX, scaleY);
-        }
+        // this scaling is just for background to fit exactly onto the viewable screen
+        float scaleX = viewport.getWorldWidth() / background.getRegionWidth();
+        float scaleY = viewport.getWorldHeight() / background.getRegionHeight();
+        canvas.draw(background, Color.WHITE, background.getRegionWidth() / 2f,
+                    background.getRegionHeight() / 2f, camera.position.x, camera.position.y, 0,
+                    scaleX, scaleY);
+
+        canvas.draw(playerTexture, Color.WHITE, playerTexture.getRegionWidth() / 2f,
+                    playerTexture.getRegionHeight() / 2f, camera.position.x, camera.position.y, 0,
+                    1, 1);
+        // 1 game unit = 30 px => 1 by 1 character => 30 by 30 px in viewport coordinate =>
+        // 1600by900 => 4k by 4k you will see more than 30px, 1000 by 780 => less than 30px wide
         canvas.end();
     }
 
@@ -77,7 +72,6 @@ public class GameplayScreen extends GameScreen {
         viewport = null;
         camera = null;
         background = null;
-        videoPlayer.dispose();
     }
 
     @Override
@@ -102,6 +96,5 @@ public class GameplayScreen extends GameScreen {
     @Override
     public void show() {
         super.show();
-        this.playVideo = true;
     }
 }
