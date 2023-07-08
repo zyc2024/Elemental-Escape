@@ -1,6 +1,7 @@
 {
   "textures": {
     "game:background": "gameplay/example.jpeg",
+    "game:player": "gameplay/temp_player.png",
     "transition:black": "transitions/black.png",
     "cutscene:scene2_frame1": "template_scenes/frame1.png",
     "cutscene:scene2_frame2": "template_scenes/frame2.png",
