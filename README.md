@@ -9,7 +9,7 @@
 
 ## Getting Started
 
-### Mac Instructions
+### Mac / Windows Instructions
 
 1. Open up Intellij and You should see these following options
     - New Project: create fresh project (this does not provide LIBGDX settings)
@@ -18,15 +18,12 @@
 2. Selecting "Get from VCS", choose "Repository URL" with Git as the version control. Paste the github clone URL and finish by clicking "clone" in the Intellij panel.
 3. Wait for Intellij to finish some setups.
 4. Go to File > Project Structure > Choose SDK for correct Java version (11). Select 11 as Language Level. Apply these changes and exit with "OK".
-5. Create new configuration by finding "Run" on menu bar and choosing "Edit Configurations". Add a new run configuration. Input the following
+5. Create new configuration by finding "Run" on menu bar and choosing "Edit Configurations". Add a new run configuration as an "Application". Input the following
     - Name: elemental-escape (anything works)
     - module: find the SDK (11, 17, etc).
     - cp: Elemental-Escape.desktop.main
     - Main class: com.elements.game.DesktopLauncher
     - Working Directory: click on the folder icon and find the folder "Elemental-Escape/assets" by first finding Elemental-Escape on your drive.
-
-### Windows Instructions
-1. to be added, it should be very similar to Mac (or same ?) I need to verify on a windows.
 
 ## Development Setup
 Please see the `ProjectConventions.xml` file in the root folder. To enable consistent formatting,
