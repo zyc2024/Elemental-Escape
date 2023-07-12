@@ -99,7 +99,6 @@ public abstract class CompositePhysicsBody extends PhysicsBody {
     @Override
     public void deactivatePhysics(World world) {
         if (bodyInfo.active) {
-            // Should be good for most (simple) applications.
             for (Joint joint : joints) {
                 world.destroyJoint(joint);
             }
@@ -119,9 +118,7 @@ public abstract class CompositePhysicsBody extends PhysicsBody {
 
     @Override
     protected void releaseFixtures() {
-        for (PhysicsBody obj : physicsBodies) {
-            obj.releaseFixtures();
-        }
+        // do nothing
     }
 
     /**

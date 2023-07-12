@@ -1,0 +1,54 @@
+{
+  "player": {
+    "x": 3.25,
+    "y": 1.75,
+    "width": 1.07541666667,
+    "height": 1.27083333333,
+    "hit-box": {
+      "width": 0.8,
+      "height": 1.27083
+    }
+  },
+  "platform": [
+    {
+      "x": 3.5,
+      "y": 0.5,
+      "width": 1,
+      "height": 1,
+      "hit-box": {
+        "width": 1,
+        "height": 1
+      }
+    },
+    {
+      "x": 2.5,
+      "y": 0.5,
+      "width": 1,
+      "height": 1,
+      "hit-box": {
+        "width": 1,
+        "height": 1
+      }
+    },
+    {
+      "x": 1.5,
+      "y": 0.5,
+      "width": 1,
+      "height": 1,
+      "hit-box": {
+        "width": 1,
+        "height": 1
+      }
+    },
+    {
+      "x": 0.5,
+      "y": 0.5,
+      "width": 1,
+      "height": 1,
+      "hit-box": {
+        "width": 1,
+        "height": 1
+      }
+    }
+  ]
+}

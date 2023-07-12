@@ -5,14 +5,11 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 /**
- * Base model class to support collisions.<br>
- * Instances represent at least one Box2D body and bodies can be grouped
- * together. <br>
- * This class exists to wrap the body and fixture information
+ * Base model class to support collisions.<br> Instances represent at least one Box2D body and
+ * bodies can be grouped together. <br> This class exists to wrap the body and fixture information
  * into a single interface.
  */
 public abstract class PhysicsBody {
-    /// Initialization structures to store body information
     /**
      * The physics body for Box2D.
      */
@@ -37,36 +34,36 @@ public abstract class PhysicsBody {
      * Whether to use the custom mass data
      */
     protected boolean massEffect;
+
     /**
      * A cache value for when the user wants to access the body position
      */
     protected Vector2 positionCache = new Vector2();
 
-    /// Track garbage collection status
     /**
      * A cache value for when the user wants to access the linear velocity
      */
     protected Vector2 velocityCache = new Vector2();
+
     /**
      * A cache value for when the user wants to access the center of mass
      */
     protected Vector2 centroidCache = new Vector2();
 
-    /// Caching objects
     /**
      * A tag for debugging purposes
      */
     private String nameTag;
+
     /**
      * Whether the object should be removed from the world on next pass
      */
     private boolean toRemove;
+
     /**
      * Whether the object has changed shape and needs a new fixture
      */
     private boolean isDirty;
-
-    /// BodyDef Methods
 
     /**
      * Create a new physics object at the origin.
@@ -133,8 +130,7 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * The same vector each time is returned so this cannot be used as a memory
-     * allocator.
+     * The same vector each time is returned so this cannot be used as a memory allocator.
      *
      * @return the current position for this physics body
      */
@@ -143,8 +139,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets the current position for this physics body <br>
-     * This method does not keep a reference to the vector parameter.
+     * Sets the current position for this physics body <br> This method does not keep a reference to
+     * the vector parameter.
      *
      * @param value the current position for this physics body
      */
@@ -236,9 +232,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Returns the linear velocity for this physics body <br>
-     * The same vector each time is returned so this cannot be used as a memory
-     * allocator.
+     * Returns the linear velocity for this physics body <br> The same vector each time is returned
+     * so this cannot be used as a memory allocator.
      *
      * @return the linear velocity for this physics body
      */
@@ -247,8 +242,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets the linear velocity for this physics body <br>
-     * This method does not keep a reference to the vector parameter.
+     * Sets the linear velocity for this physics body <br> This method does not keep a reference to
+     * the vector parameter.
      *
      * @param value the linear velocity for this physics body
      */
@@ -328,9 +323,9 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * An inactive body not participate in collision or dynamics. This state
-     * is similar to sleeping except the body will not be woken by other
-     * bodies and the body will not participate in collisions, ray casts, etc.
+     * An inactive body not participate in collision or dynamics. This state is similar to sleeping
+     * except the body will not be woken by other bodies and the body will not participate in
+     * collisions, ray casts, etc.
      *
      * @return true if the body is active
      */
@@ -339,8 +334,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets whether the body is active <br>
-     * See {@link #isActive()} for description of Inactive/active state.
+     * Sets whether the body is active <br> See {@link #isActive()} for description of
+     * Inactive/active state.
      *
      * @param value whether the body is active
      */
@@ -355,11 +350,10 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * A sleeping body is one that has come to rest and the physics engine
-     * has decided to stop simulating it to save CPU cycles. If a body is
-     * awake and collides with a sleeping body, then the sleeping body wakes
-     * up. Bodies will also wake up if a joint or contact attached to them is
-     * destroyed. You can also wake a body manually.
+     * A sleeping body is one that has come to rest and the physics engine has decided to stop
+     * simulating it to save CPU cycles. If a body is awake and collides with a sleeping body, then
+     * the sleeping body wakes up. Bodies will also wake up if a joint or contact attached to them
+     * is destroyed. You can also wake a body manually.
      *
      * @return true if the body is awake
      */
@@ -368,8 +362,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets whether the body is awake <br>
-     * See {@link #isAwake()} for description of sleeping state.
+     * Sets whether the body is awake <br> See {@link #isAwake()} for description of sleeping
+     * state.
      *
      * @param value whether the body is awake
      */
@@ -402,15 +396,12 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * By default, Box2D uses continuous collision detection (CCD) to prevent
-     * dynamic bodies from tunneling through static bodies. Normally CCD is
-     * not used between dynamic bodies. This is done to keep performance
-     * reasonable. In some game scenarios you need dynamic bodies to use CCD.
-     * For example, you may want to shoot a high speed bullet at a stack of
-     * dynamic bricks. Without CCD, the bullet might tunnel through the
-     * bricks. <br>
-     * Fast moving objects in Box2D can be labeled as bullets. Bullets will
-     * perform CCD with both static and dynamic bodies.
+     * By default, Box2D uses continuous collision detection (CCD) to prevent dynamic bodies from
+     * tunneling through static bodies. Normally CCD is not used between dynamic bodies. This is
+     * done to keep performance reasonable. In some game scenarios you need dynamic bodies to use
+     * CCD. For example, you may want to shoot a high speed bullet at a stack of dynamic bricks.
+     * Without CCD, the bullet might tunnel through the bricks. <br> Fast moving objects in Box2D
+     * can be labeled as bullets. Bullets will perform CCD with both static and dynamic bodies.
      *
      * @return true if this body is a bullet
      */
@@ -419,8 +410,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets whether this body is a bullet <br>
-     * See {@link #isBullet()} for description of bullet body
+     * Sets whether this body is a bullet <br> See {@link #isBullet()} for description of bullet
+     * body
      *
      * @param value whether this body is a bullet
      */
@@ -462,8 +453,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets the gravity scale to apply to this body <br>
-     * Be careful with this, since increased gravity can decrease stability.
+     * Sets the gravity scale to apply to this body <br> Be careful with this, since increased
+     * gravity can decrease stability.
      *
      * @param value the gravity scale to apply to this body
      */
@@ -476,12 +467,11 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Linear damping is used to reduce the linear velocity. Damping is
-     * different from friction because friction only occurs upon contact. <br>
-     * Damping parameters should be between 0 and infinity, with 0 meaning no
-     * damping and infinity meaning full damping. Normally you will use a
-     * damping value between 0 and 0.1. <br>
-     * Linear damping is usually avoided because it makes bodies look floaty.
+     * Linear damping is used to reduce the linear velocity. Damping is different from friction
+     * because friction only occurs upon contact. <br> Damping parameters should be between 0 and
+     * infinity, with 0 meaning no damping and infinity meaning full damping. Normally you will use
+     * a damping value between 0 and 0.1. <br> Linear damping is usually avoided because it makes
+     * bodies look floaty.
      *
      * @return the linear damping for this body.
      */
@@ -490,8 +480,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets the linear damping for this body. <br>
-     * See {@link #getLinearDamping()} for description of Linear Dampening
+     * Sets the linear damping for this body. <br> See {@link #getLinearDamping()} for description
+     * of Linear Dampening
      *
      * @param value the linear damping for this body.
      */
@@ -504,10 +494,9 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Angular damping is used to reduce the angular velocity. <br>
-     * Damping parameters should be between 0 and infinity, with 0 meaning no
-     * damping, and infinity meaning full damping. Normally you will use a
-     * damping value between 0 and 0.1.
+     * Angular damping is used to reduce the angular velocity. <br> Damping parameters should be
+     * between 0 and infinity, with 0 meaning no damping, and infinity meaning full damping.
+     * Normally you will use a damping value between 0 and 0.1.
      *
      * @return the angular damping for this body.
      */
@@ -515,11 +504,9 @@ public abstract class PhysicsBody {
         return body != null ? body.getAngularDamping() : bodyInfo.angularDamping;
     }
 
-    /// FixtureDef Methods
-
     /**
-     * Sets the angular damping for this body. <br>
-     * See {@link #getAngularDamping()} for description of Angular Dampening
+     * Sets the angular damping for this body. <br> See {@link #getAngularDamping()} for description
+     * of Angular Dampening
      *
      * @param value the angular damping for this body.
      */
@@ -532,9 +519,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Copies the state from the given body to the body definition. <br>
-     * This is important if you want to save the state of the body before
-     * removing it from the world.
+     * Copies the state from the given body to the body definition. <br> This is important if you
+     * want to save the state of the body before removing it from the world.
      */
     protected void setBodyState(Body body) {
         bodyInfo.type = body.getType();
@@ -552,9 +538,9 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * The density is typically measured in usually in kg/m^2. The density
-     * can be zero or positive. You should generally use similar densities
-     * for all your fixtures. This will improve stacking stability.
+     * The density is typically measured in usually in kg/m^2. The density can be zero or positive.
+     * You should generally use similar densities for all your fixtures. This will improve stacking
+     * stability.
      *
      * @return the density of this body
      */
@@ -584,13 +570,11 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets the friction coefficient of this body <br>
-     * The friction parameter is usually set between 0 and 1, but can be any
-     * non-negative value. A friction value of 0 turns off friction and a
-     * value of 1 makes the friction strong. <br>
-     * When the friction force is  computed between two shapes, Box2D
-     * must combine the friction parameters of the two parent fixtures. This
-     * is done with the geometric mean.
+     * Sets the friction coefficient of this body <br> The friction parameter is usually set between
+     * 0 and 1, but can be any non-negative value. A friction value of 0 turns off friction and a
+     * value of 1 makes the friction strong. <br> When the friction force is  computed between two
+     * shapes, Box2D must combine the friction parameters of the two parent fixtures. This is done
+     * with the geometric mean.
      *
      * @param value the friction coefficient of this body
      */
@@ -611,12 +595,11 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets the restitution of this body <br>
-     * Restitution is used to make objects bounce. The restitution value is
-     * usually set to be between 0 and 1. Consider dropping a ball on a table.
-     * A value of zero means the ball won't bounce. This is called an
-     * inelastic collision. A value of one means the ball's velocity will be
-     * exactly reflected. This is called a perfectly elastic collision.
+     * Sets the restitution of this body <br> Restitution is used to make objects bounce. The
+     * restitution value is usually set to be between 0 and 1. Consider dropping a ball on a table.
+     * A value of zero means the ball won't bounce. This is called an inelastic collision. A value
+     * of one means the ball's velocity will be exactly reflected. This is called a perfectly
+     * elastic collision.
      *
      * @param value the restitution of this body
      */
@@ -637,11 +620,9 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets whether this object is a sensor. <br>
-     * Sometimes game logic needs to know when two entities overlap yet there
-     * should be no collision response. This is done by using sensors. A
-     * sensor is an entity that detects collision but does not produce a
-     * response.
+     * Sets whether this object is a sensor. <br> Sometimes game logic needs to know when two
+     * entities overlap yet there should be no collision response. This is done by using sensors. A
+     * sensor is an entity that detects collision but does not produce a response.
      *
      * @param value whether this object is a sensor.
      */
@@ -654,8 +635,6 @@ public abstract class PhysicsBody {
         }
     }
 
-    /// MassData Methods
-
     /**
      * @return the filter data for this object (or null if there is none)
      */
@@ -664,13 +643,11 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets the filter data for this object <br>
-     * Collision filtering allows you to prevent collision between fixtures.
-     * For example, say you make a character that rides a bicycle. You want
-     * the bicycle to collide with the terrain and the character to collide
-     * with the terrain, but you don't want the character to collide with the
-     * bicycle (because they must overlap). <br>
-     * Box2D supports such collision filtering using categories and groups. <br>
+     * Sets the filter data for this object <br> Collision filtering allows you to prevent collision
+     * between fixtures. For example, say you make a character that rides a bicycle. You want the
+     * bicycle to collide with the terrain and the character to collide with the terrain, but you
+     * don't want the character to collide with the bicycle (because they must overlap). <br> Box2D
+     * supports such collision filtering using categories and groups. <br>
      *
      * @param value the filter data for this object, A value of null removes all collision filters.
      */
@@ -692,9 +669,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Returns the center of mass of this body <br>
-     * This method returns the same  vector each time so this cannot be used
-     * as a memory allocator.
+     * Returns the center of mass of this body <br> This method returns the same  vector each time
+     * so this cannot be used as a memory allocator.
      *
      * @return the center of mass for this physics body
      */
@@ -703,8 +679,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets the center of mass for this physics body <br>
-     * This method does not keep a reference to the vector parameter.
+     * Sets the center of mass for this physics body <br> This method does not keep a reference to
+     * the vector parameter.
      *
      * @param value the center of mass for this physics body
      */
@@ -728,9 +704,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets the rotational inertia of this body <br>
-     * For static bodies, the mass and rotational inertia are set to zero. When
-     * a body has fixed rotation, its rotational inertia is zero.
+     * Sets the rotational inertia of this body <br> For static bodies, the mass and rotational
+     * inertia are set to zero. When a body has fixed rotation, its rotational inertia is zero.
      *
      * @param value the rotational inertia of this body
      */
@@ -753,11 +728,8 @@ public abstract class PhysicsBody {
         return (body != null ? body.getMass() : massInfo.mass);
     }
 
-    /// Garbage Collection Methods
-
     /**
-     * Sets the mass of this body <br>
-     * The value is usually in kilograms.
+     * Sets the mass of this body <br> The value is usually in kilograms.
      *
      * @param value the mass of this body
      */
@@ -791,9 +763,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets whether our object has been flagged for garbage collection <br>
-     * Garbage collected object will be removed from the physics world at
-     * the next time step.
+     * Sets whether our object has been flagged for garbage collection <br> Garbage collected object
+     * will be removed from the physics world at the next time step.
      *
      * @param value whether our object has been flagged for garbage collection
      */
@@ -808,13 +779,11 @@ public abstract class PhysicsBody {
         return isDirty;
     }
 
-    /// DEBUG METHODS
 
     /**
-     * Sets whether the shape information must be updated. <br>
-     * Attributes tied to the geometry (and not just forces/position) must wait for collisions to
-     * complete before they are reset. Shapes (and their
-     * properties) are reset in the update method.
+     * Sets whether the shape information must be updated. <br> Attributes tied to the geometry (and
+     * not just forces/position) must wait for collisions to complete before they are reset. Shapes
+     * (and their properties) are reset in the update method.
      *
      * @param value whether the shape information must be updated.
      */
@@ -837,8 +806,8 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Sets the physics object tag. <br>
-     * A tag is a string attached to an object, in order to identify it in debugging.
+     * Sets the physics object tag. <br> A tag is a string attached to an object, in order to
+     * identify it in debugging.
      *
      * @param value the physics object tag
      */
@@ -851,14 +820,15 @@ public abstract class PhysicsBody {
     /**
      * Creates the physics Body(s) for this object, adding them to the world.
      *
-     * @param world Box2D world to store body
+     * @param world    Box2D world to store body
+     * @param userData object to act as listener to physics collisions
      * @return true if object allocation succeeded
      */
-    public boolean activatePhysics(World world) {
+    public boolean activatePhysics(World world, Object userData) {
         // Make a body, if possible
         bodyInfo.active = true;
         body = world.createBody(bodyInfo);
-        body.setUserData(this);
+        body.setUserData(userData);
 
         // Only initialize if a body was created.
         if (body != null) {
@@ -871,8 +841,17 @@ public abstract class PhysicsBody {
     }
 
     /**
-     * Destroys the physics Body(s) of this object if applicable,
-     * removing them from the world.
+     * Creates the physics Body(s) for this object, adding them to the world.
+     *
+     * @param world Box2D world to store body
+     * @return true if object allocation succeeded
+     */
+    public boolean activatePhysics(World world) {
+        return activatePhysics(world, this);
+    }
+
+    /**
+     * Destroys the physics Body(s) of this object if applicable, removing them from the world.
      *
      * @param world Box2D world that stores body
      */
@@ -896,4 +875,18 @@ public abstract class PhysicsBody {
      * Release the fixtures for this body, resetting the shape <br>
      */
     protected abstract void releaseFixtures();
+
+    /**
+     * Updates the body's physics state. This method should be called after collisions have been
+     * resolved. Collisions may result in changes to physics geometry so fixtures need to be
+     * updated.
+     *
+     * @param delta Timing values from game loop
+     */
+    public void update(float delta) {
+        // Recreate the fixture object if dimensions changed.
+        if (isDirty()) {
+            createFixtures();
+        }
+    }
 }

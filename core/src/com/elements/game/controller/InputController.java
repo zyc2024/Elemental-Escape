@@ -1,29 +1,27 @@
 package com.elements.game.controller;
 
-import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.Cursor;
-import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 
 public class InputController {
 
-    // Fields to manage buttons
+    // TODO (later): custom key-binds
+
     /** Whether the reset button was just pressed. */
-    private boolean resetPressed;
-    private boolean resetPrevious;
+    private boolean resetToggled;
 
     /** Whether the debug toggle was just pressed. */
-    private boolean debugPressed;
-    private boolean debugPrevious;
-
-    /** How much did we move horizontally? */
-    private float horizontal;
+    private boolean debugToggled;
 
     /** whether the jump key was just pressed */
     private boolean jumpToggled;
 
+    /** horizontal movement */
+    private float horizontal;
+
     /**
-     * Returns the amount of sideways movement <br>
-     * -1 = left, 1 = right, 0 = still
+     * amount of sideways movement <br> -1 = left, 1 = right, 0 = still
+     *
      * @return the amount of sideways movement.
      */
     public float getHorizontal() {
@@ -31,35 +29,47 @@ public class InputController {
     }
 
     /**
-     * @return true if the reset button was pressed.
+     * @return whether reset button was toggled
      */
-    public boolean didReset() {
-        return resetPressed && !resetPrevious;
+    public boolean resetToggled() {
+        return resetToggled;
     }
 
     /**
-     * @return true if the player wants to go toggle the debug mode.
+     * @return whether debug button was toggled
      */
-    public boolean didDebug() {
-        return debugPressed && !debugPrevious;
+    public boolean debugToggled() {
+        return debugToggled;
     }
 
     /**
-     * Creates a new input controller <p></p>
-     * The input controller attempts to connect to the keyboard control.
+     * @return whether jump button was toggled
      */
-    public InputController() {
-        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);
+    public boolean jumpToggled() {
+        return jumpToggled;
     }
 
+    /**
+     * Creates a new input controller. <br> The input controller attempts to connect to the keyboard
+     * control.
+     */
+    public InputController() {}
+
+    /**
+     * Reads the input for the player and converts the result into game logic.
+     */
+    public void readInput() {
+        readKeyboard();
+        // why make the other method private?
+        // answer: in the event that input can be extended with xbox controllers, only one set of
+        // inputs can be read but the user of the input controller need not understand the
+        // distinction.
+    }
 
     /**
      * Reads input from the keyboard.
      */
-    private void readKeyboard(Rectangle bounds, Vector2 scale) {
-        resetPressed = resetPressed || (Gdx.input.isKeyPressed(Input.Keys.R));
-        debugPressed = debugPressed || (Gdx.input.isKeyPressed(Input.Keys.F1));
-
+    private void readKeyboard() {
         // A/D for moving character
         horizontal = 0.0f;
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
@@ -68,10 +78,13 @@ public class InputController {
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             horizontal -= 1.0f;
         }
-        jumpToggled = Gdx.input.isKeyJustPressed(Input.Keys.W);
+
+        resetToggled = Gdx.input.isKeyJustPressed(Input.Keys.R);
+        debugToggled = Gdx.input.isKeyJustPressed(Input.Keys.F1);
+        jumpToggled = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
 
         // get mouse position
-//        mousePos.x = Gdx.input.getX();
-//        mousePos.y = Gdx.input.getY();
+        // mousePos.x = Gdx.input.getX();
+        // mousePos.y = Gdx.input.getY();
     }
 }

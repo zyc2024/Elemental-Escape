@@ -25,7 +25,7 @@ public abstract class GameScreen implements Screen, InputProcessor {
 
     protected Viewport viewport;
 
-    protected int exitCode;
+    protected int exitCode = -1;
 
     /**
      * Constructs a screen with the given viewport settings and camera. The virtual dimensions set
@@ -162,9 +162,13 @@ public abstract class GameScreen implements Screen, InputProcessor {
     /**
      * @return whether this screen should return control of the view
      */
-    public abstract boolean shouldExit();
+    public boolean shouldExit() {
+        return exitCode >= 0;
+    }
 
     /**
+     * this should be used only when {@link #shouldExit()} returns true. A valid exit code is
+     * non-negative.
      * @return the exit status code
      */
     public int exitCode() {return exitCode;}
