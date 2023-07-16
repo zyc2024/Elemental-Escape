@@ -49,9 +49,10 @@ public class GameplayController implements ContactListener {
      * loads game components from the given world.
      * @param gameWorld game world reference
      */
-    public void setWorld(GameWorld gameWorld){
+    public void setWorldComponents(GameWorld gameWorld){
         // grab what we need to CONTROL
         this.gameWorld = gameWorld;
+        gameWorld.getWorld().setContactListener(this);
         this.gameConstants = gameWorld.getGameConstants();
         JsonValue playerConstants = gameConstants.get("player");
         jumpForceMagnitude = playerConstants.getFloat("jumpForce");
@@ -138,7 +139,9 @@ public class GameplayController implements ContactListener {
             // SET
             groundSensorContacts.remove(fixDataA == Player.GROUND_SENSOR_NAME ? fixtureB :
                                                fixtureA );
-            if (groundSensorContacts.size() == 0)
+            if (groundSensorContacts.size == 0){
+                player.setGrounded(false);
+            }
         }
     }
 

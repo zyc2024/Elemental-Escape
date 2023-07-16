@@ -3,6 +3,7 @@ package com.elements.game.utility.physics;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.elements.game.view.GameCanvas;
 
 /**
  * Base model class to support collisions.<br> Instances represent at least one Box2D body and
@@ -888,5 +889,9 @@ public abstract class PhysicsBody {
         if (isDirty()) {
             createFixtures();
         }
+    }
+
+    public void debug(GameCanvas canvas, Vector2 drawScale){
+        // needs to override
     }
 }
