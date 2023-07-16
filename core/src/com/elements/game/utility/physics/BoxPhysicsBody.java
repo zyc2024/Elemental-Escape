@@ -3,6 +3,10 @@ package com.elements.game.utility.physics;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.elements.game.view.GameCanvas;
+import com.badlogic.gdx.graphics.Color;
+
+import java.awt.*;
 
 /**
  * Box-shaped model to support collisions. <br>
@@ -165,5 +169,9 @@ public class BoxPhysicsBody extends PhysicsBody {
             body.destroyFixture(geometry);
             geometry = null;
         }
+    }
+
+    public void debug(GameCanvas canvas, Vector2 drawScale){
+        canvas.drawPhysics(shape,Color.RED,getX(),getY(),getAngle(),drawScale.x,drawScale.y);
     }
 }

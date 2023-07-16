@@ -23,7 +23,7 @@ public class GameWorld implements Disposable {
     private final Vector2 gravity;
 
     /**
-     * Box2D world object
+     * Box2D world object (to reset level, you destroy the world and rebuild)
      */
     private World world;
 
@@ -93,7 +93,7 @@ public class GameWorld implements Disposable {
      */
     private void addToPhysicsWorld(CollidableObject o) {
         gameObjects.add(o);
-        o.getHitBox().activatePhysics(world);
+        o.getHitBox().activatePhysics(world, o);
     }
 
     // BEGIN-REGION ======================== Accessors =======================================

@@ -4,9 +4,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonValue;
 import com.elements.game.controller.GameplayController;
-import com.elements.game.model.GameObject;
+import com.elements.game.model.CollidableObject;
 import com.elements.game.model.GameWorld;
 import com.elements.game.utility.assets.AssetDirectory;
 import com.elements.game.view.GameCanvas;
@@ -33,6 +34,9 @@ public class GameplayScreen extends GameScreen {
 
     private GameWorld gameWorld;
 
+    /** whether debug mode is active */
+    private boolean debug;
+
 
     public GameplayScreen(GameCanvas canvas) {
         this.canvas = canvas;
@@ -47,7 +51,6 @@ public class GameplayScreen extends GameScreen {
         renderer.gatherAssets(assets);
         JsonValue gameConstants = assets.getEntry("constants", JsonValue.class);
         gameWorld = new GameWorld(gameConstants);
-        gameplayController.setWorld(gameWorld);
     }
 
     private void update(float delta) {
@@ -69,10 +72,19 @@ public class GameplayScreen extends GameScreen {
                     background.getRegionHeight() / 2f, camera.position.x, camera.position.y, 0,
                     viewport.getWorldWidth() / background.getRegionWidth(),
                     viewport.getWorldHeight() / background.getRegionHeight());
-        // TODO (task): get game objects from level, render game objects (at most 3 lines of code)
-
-        // TODO (task): code above this line
+        gameWorld.getPlayer().accept(renderer);
+        gameWorld.getGameObjects().forEach((CollidableObject co) -> {
+            co.accept(renderer);
+        });
         canvas.end();
+        if (debug) {
+            canvas.beginDebug(camera);
+            gameWorld.getGameObjects().forEach((CollidableObject co) -> {
+                co.getHitBox().debug(canvas, new Vector2(viewport.getWorldWidth() / 16,
+                                                         viewport.getWorldHeight() / 9));
+            });
+            canvas.endDebug();
+        }
     }
 
     /**
@@ -91,6 +103,8 @@ public class GameplayScreen extends GameScreen {
     public void reset() {
         gameWorld.dispose();
         gameWorld.populate(levelData);
+        // player gets discarded and recreated so the world needs to be set on reset()
+        gameplayController.setWorldComponents(gameWorld);
         // TODO (later): set draw scale (conversion from 1 unit of game to number of pixels based
         //  on the desired number of game units to render). For instance, right now the
         //  denominators indicate that we split the screen into 16 columns and 9 rows.
@@ -109,10 +123,8 @@ public class GameplayScreen extends GameScreen {
 
     @Override
     public boolean keyDown(int keycode) {
-        // this is an example of a screen specific input.
-        // realistically, you should never exit game by a press of a button (accidental events).
-        if (keycode == Input.Keys.ESCAPE) {
-            exitCode = EXIT_GAME;
+        if (keycode == Input.Keys.F1) {
+            debug = !debug;
         }
         return true;
     }

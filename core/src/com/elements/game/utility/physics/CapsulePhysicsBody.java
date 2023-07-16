@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.elements.game.view.GameCanvas;
+import com.badlogic.gdx.graphics.Color;
 
 
 /**
@@ -420,6 +422,38 @@ public class CapsulePhysicsBody extends PhysicsBody {
         if (cap2 != null) {
             body.destroyFixture(cap2);
             cap2 = null;
+        }
+    }
+
+    public void debug(GameCanvas canvas, Vector2 drawScale){
+        canvas.drawPhysics(shape,Color.BLUE,getX(),getY(),getAngle(),drawScale.x,drawScale.y);
+        if (cap1 != null) {
+            // Need to manually rotate caps off axis
+            float dx; float dy;
+            if (isHorizontal(orient)) {
+                float r = -center.x;
+                dx = (float)(r*Math.cos(Math.PI+getAngle()));
+                dy = (float)(r*Math.sin(Math.PI+getAngle()));
+            } else {
+                float r = center.y+center.height;
+                dx = (float)(r*Math.cos(Math.PI/2.0f+getAngle()));
+                dy = (float)(r*Math.sin(Math.PI/2.0f+getAngle()));
+            }
+            canvas.drawPhysics(end1,Color.YELLOW,getX()+dx,getY()+dy,drawScale.x,drawScale.y);
+        }
+        if (cap2 != null) {
+            // Need to manually rotate caps off axis
+            float dx; float dy;
+            if (isHorizontal(orient)) {
+                float r = center.x+center.width;
+                dx = (float)(r*Math.cos(getAngle()));
+                dy = (float)(r*Math.sin(getAngle()));
+            } else {
+                float r = -center.y;
+                dx = (float)(r*Math.cos(-Math.PI/2.0f+getAngle()));
+                dy = (float)(r*Math.sin(-Math.PI/2.0f+getAngle()));
+            }
+            canvas.drawPhysics(end2,Color.YELLOW,getX()+dx,getY()+dy,drawScale.x,drawScale.y);
         }
     }
 
