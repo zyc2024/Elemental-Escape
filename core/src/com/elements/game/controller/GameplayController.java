@@ -39,6 +39,7 @@ public class GameplayController implements ContactListener {
         // grab what we need to CONTROL
         this.gameWorld = gameWorld;
         this.gameConstants = gameWorld.getGameConstants();
+        this.gameWorld.getWorld().setContactListener(this);
         JsonValue playerConstants = gameConstants.get("player");
         jumpForceMagnitude = playerConstants.getFloat("jumpForce");
         walkForceMagnitude = playerConstants.getFloat("walkForce");
@@ -80,13 +81,6 @@ public class GameplayController implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
         System.out.println("touch me");
-//        Player player = gameWorld.getPlayer();
-//        Fixture a = contact.getFixtureA();
-//        Fixture b = contact.getFixtureB();
-//
-//        if (a == null || b == null) return;
-//
-//        System.out.println(a.getBody().getUserData() + " " + b.getBody().getUserData());
     }
 
     @Override
