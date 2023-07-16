@@ -12,9 +12,8 @@ public class Player extends CollidableObject {
     public static final String GROUND_SENSOR_NAME = "playerSensor";
 
     private final PlayerHitBox hitBox;
-
-    /** whether the player is jumping */
-    boolean isJumping;
+    
+    boolean isGrounded;
 
     public Player(JsonValue playerConstants, JsonValue playerData) {
         super(playerData.getFloat("width"), playerData.getFloat("height"));
@@ -60,9 +59,7 @@ public class Player extends CollidableObject {
      */
     public void applyImpulse(Vector2 impulse) {
         Body body = hitBox.getBody();
-        // TODO (task) : read applyForce() above and implement applyImpulse similarly
-        // TODO (task) : code above, you may want to see look at available methods to use on the
-        //  body object.
+        body.applyLinearImpulse(impulse, hitBox.getPosition(), true);
     }
 
     @Override
@@ -75,4 +72,12 @@ public class Player extends CollidableObject {
         return v.visit(this);
     }
 
+    public boolean isGrounded() {
+        return isGrounded;
+    }
+
+    public void setGrounded(boolean grounded) {
+        isGrounded = grounded;
+    }
+    
 }

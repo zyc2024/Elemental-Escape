@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
 import com.elements.game.controller.GameplayController;
+import com.elements.game.model.CollidableObject;
 import com.elements.game.model.GameObject;
 import com.elements.game.model.GameWorld;
+import com.elements.game.model.Player;
 import com.elements.game.utility.assets.AssetDirectory;
 import com.elements.game.view.GameCanvas;
 import com.elements.game.visitors.GameObjectRenderer;
@@ -70,7 +72,8 @@ public class GameplayScreen extends GameScreen {
                     viewport.getWorldWidth() / background.getRegionWidth(),
                     viewport.getWorldHeight() / background.getRegionHeight());
         // TODO (task): get game objects from level, render game objects (at most 3 lines of code)
-
+        gameWorld.getPlayer().accept(renderer);
+        gameWorld.getGameObjects().forEach( (CollidableObject co) -> {co.accept(renderer);} );
         // TODO (task): code above this line
         canvas.end();
     }
