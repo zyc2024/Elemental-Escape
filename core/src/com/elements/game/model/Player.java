@@ -13,8 +13,8 @@ public class Player extends CollidableObject {
 
     private final PlayerHitBox hitBox;
 
-    /** whether the player is jumping */
-    boolean isJumping;
+    /** whether the player is on the ground */
+    boolean isOnGround;
 
     public Player(JsonValue playerConstants, JsonValue playerData) {
         super(playerData.getFloat("width"), playerData.getFloat("height"));
@@ -60,9 +60,15 @@ public class Player extends CollidableObject {
      */
     public void applyImpulse(Vector2 impulse) {
         Body body = hitBox.getBody();
-        // TODO (task) : read applyForce() above and implement applyImpulse similarly
-        // TODO (task) : code above, you may want to see look at available methods to use on the
-        //  body object.
+        body.applyLinearImpulse(impulse, body.getLocalCenter(), true);
+    }
+
+    public void setOnGround(boolean onGround) {
+        isOnGround = onGround;
+    }
+
+    public boolean isOnGround() {
+        return isOnGround;
     }
 
     @Override

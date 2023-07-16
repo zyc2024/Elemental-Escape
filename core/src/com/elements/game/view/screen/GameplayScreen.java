@@ -69,9 +69,9 @@ public class GameplayScreen extends GameScreen {
                     background.getRegionHeight() / 2f, camera.position.x, camera.position.y, 0,
                     viewport.getWorldWidth() / background.getRegionWidth(),
                     viewport.getWorldHeight() / background.getRegionHeight());
-        // TODO (task): get game objects from level, render game objects (at most 3 lines of code)
-
-        // TODO (task): code above this line
+        gameWorld.getGameObjects().forEach(obj -> {
+            obj.accept(renderer);
+        });
         canvas.end();
     }
 
