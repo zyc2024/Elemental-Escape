@@ -36,7 +36,6 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
         drawScale = new Vector2();
     }
 
-
     /**
      * updates the renderer's drawing scale
      *
@@ -44,6 +43,13 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
      * @param sy scaling of y dimension (1 unit tall in game -> sy pixels in screen space)
      */
     public void setDrawScale(float sx, float sy) {drawScale.set(sx, sy);}
+
+    /**
+     * updates the renderer's drawing scale
+     *
+     * @param scale scaling of x,y dimensions, see {@link #setDrawScale(float, float)}
+     */
+    public void setDrawScale(Vector2 scale) {drawScale.set(scale);}
 
     /**
      * stores and initializes all necessary assets to render game objects

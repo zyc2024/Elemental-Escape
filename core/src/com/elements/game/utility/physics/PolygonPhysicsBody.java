@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.ShortArray;
+import com.elements.game.view.GameCanvas;
+import com.badlogic.gdx.graphics.Color;
 
 /**
  * Arbitrary polygonal-shaped model to support collisions. <br> The polygon coordinates are all in
@@ -315,6 +317,13 @@ public class PolygonPhysicsBody extends PhysicsBody {
             for (Fixture fix : geometries) {
                 body.destroyFixture(fix);
             }
+        }
+    }
+
+    @Override
+    public void debug(GameCanvas canvas, Vector2 drawScale) {
+        for(PolygonShape tri : shapes) {
+            canvas.drawPhysics(tri,Color.YELLOW,getX(),getY(),getAngle(),drawScale.x,drawScale.y);
         }
     }
 }

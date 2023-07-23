@@ -891,7 +891,10 @@ public abstract class PhysicsBody {
         }
     }
 
-    public void debug(GameCanvas canvas, Vector2 drawScale){
-        // needs to override
-    }
+    /**
+     * output debug information to the canvas
+     * @param canvas rendering canvas
+     * @param drawScale physics-to-screen conversion scale
+     */
+    public abstract void debug(GameCanvas canvas, Vector2 drawScale);
 }

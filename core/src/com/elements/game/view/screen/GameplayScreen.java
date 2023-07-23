@@ -30,7 +30,9 @@ public class GameplayScreen extends GameScreen {
     /** renderer to draw game objects */
     private final GameObjectRenderer renderer;
 
-    private final GameplayController gameplayController;
+    private final Vector2 drawScale;
+
+    private GameplayController gameplayController;
 
     private GameWorld gameWorld;
 
@@ -41,7 +43,7 @@ public class GameplayScreen extends GameScreen {
     public GameplayScreen(GameCanvas canvas) {
         this.canvas = canvas;
         this.renderer = new GameObjectRenderer(canvas);
-        this.gameplayController = new GameplayController();
+        this.drawScale = new Vector2(1,1);
     }
 
     @Override
@@ -51,6 +53,7 @@ public class GameplayScreen extends GameScreen {
         renderer.gatherAssets(assets);
         JsonValue gameConstants = assets.getEntry("constants", JsonValue.class);
         gameWorld = new GameWorld(gameConstants);
+        gameplayController = new GameplayController(gameWorld, gameConstants);
     }
 
     private void update(float delta) {
@@ -72,7 +75,6 @@ public class GameplayScreen extends GameScreen {
                     background.getRegionHeight() / 2f, camera.position.x, camera.position.y, 0,
                     viewport.getWorldWidth() / background.getRegionWidth(),
                     viewport.getWorldHeight() / background.getRegionHeight());
-        gameWorld.getPlayer().accept(renderer);
         gameWorld.getGameObjects().forEach((CollidableObject co) -> {
             co.accept(renderer);
         });
@@ -80,8 +82,7 @@ public class GameplayScreen extends GameScreen {
         if (debug) {
             canvas.beginDebug(camera);
             gameWorld.getGameObjects().forEach((CollidableObject co) -> {
-                co.getHitBox().debug(canvas, new Vector2(viewport.getWorldWidth() / 16,
-                                                         viewport.getWorldHeight() / 9));
+                co.getHitBox().debug(canvas, drawScale);
             });
             canvas.endDebug();
         }
@@ -101,14 +102,16 @@ public class GameplayScreen extends GameScreen {
      * Resets the current gameplay (level)
      */
     public void reset() {
+        // the game world (container) empties and loads the level. The controller resets itself
+        // and is ready to update the world.
         gameWorld.dispose();
         gameWorld.populate(levelData);
-        // player gets discarded and recreated so the world needs to be set on reset()
-        gameplayController.setWorldComponents(gameWorld);
+        gameplayController.reset();
         // TODO (later): set draw scale (conversion from 1 unit of game to number of pixels based
         //  on the desired number of game units to render). For instance, right now the
         //  denominators indicate that we split the screen into 16 columns and 9 rows.
-        this.renderer.setDrawScale(viewport.getWorldWidth() / 16, viewport.getWorldHeight() / 9);
+        drawScale.set(viewport.getWorldWidth() / 16, viewport.getWorldHeight() / 9);
+        this.renderer.setDrawScale(drawScale);
     }
 
 
@@ -117,7 +120,9 @@ public class GameplayScreen extends GameScreen {
         viewport = null;
         camera = null;
         background = null;
-        gameWorld.dispose();
+        if (gameWorld != null) {
+            gameWorld.dispose();
+        }
         gameWorld = null;
     }
 
