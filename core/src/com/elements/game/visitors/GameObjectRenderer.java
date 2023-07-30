@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.elements.game.model.BlockPlatform;
+import com.elements.game.model.Fireball;
 import com.elements.game.model.Player;
 import com.elements.game.utility.assets.AssetDirectory;
 import com.elements.game.view.GameCanvas;
@@ -82,6 +83,11 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
                     platform.getX() * drawScale.x, platform.getY() * drawScale.y,
                     platform.getHitBox().getAngle(), dimensions.x * drawScale.x / textureWidth,
                     dimensions.y * drawScale.y / textureHeight);
+        return null;
+    }
+
+    public Void visit(Fireball fireball){
+        // draw fireball
         return null;
     }
 

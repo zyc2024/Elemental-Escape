@@ -4,10 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectSet;
-import com.elements.game.model.BlockPlatform;
-import com.elements.game.model.CollidableObject;
-import com.elements.game.model.GameWorld;
-import com.elements.game.model.Player;
+import com.elements.game.model.*;
 
 public class GameplayController implements ContactListener {
 
@@ -65,6 +62,11 @@ public class GameplayController implements ContactListener {
             player.applyForce(cache.set(horizontal * walkForceMagnitude, 0));
         }
         postUpdate(deltaTime);
+
+        if (inputController.abilityToggled()) {
+            // suppose for now, summon fireball
+            gameWorld.summonFireBall(player);
+        }
     }
 
     /**
@@ -125,8 +127,8 @@ public class GameplayController implements ContactListener {
         boolean isPlayerSensor = fixDataA == Player.GROUND_SENSOR_NAME || fixDataB == Player.GROUND_SENSOR_NAME;
         // our feet touched a platform
         if (isPlayerSensor && platform != null) {
-            // if player's sensor moves way from a part of platform, remove platform (fixture) from
-            // SET
+            // if player's sensor moves way from a part of platform, remove platform (fixture)
+            // from contact set
             groundSensorContacts.remove(
                     fixDataA == Player.GROUND_SENSOR_NAME ? fixtureB : fixtureA);
             if (groundSensorContacts.size == 0) {
@@ -135,9 +137,28 @@ public class GameplayController implements ContactListener {
         }
     }
 
+    /**
+     * preSolve() is useful for modifying contact before it runs through beginContact()
+     * @param contact box2d contact
+     * @param oldManifold physics manifold
+     */
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-        // ignore for now
+        Fixture fixtureA = contact.getFixtureA();
+        Fixture fixtureB = contact.getFixtureB();
+        Body bodyA = fixtureA.getBody();
+        Body bodyB = fixtureB.getBody();
+        CollidableObject objectA = (CollidableObject) bodyA.getUserData();
+        CollidableObject objectB = (CollidableObject) bodyB.getUserData();
+        Fireball fireball = objectA instanceof Fireball ? (Fireball) objectA : null;
+        fireball = objectB instanceof Fireball ? (Fireball) objectB : fireball;
+        Player playerObj = objectA instanceof Player ? (Player) objectA : null;
+        playerObj = objectB instanceof Player ? (Player) objectB : playerObj;
+        // fireball and player touched, ignore collision
+        // otherwise, proceed with beginContact
+        if (fireball != null && playerObj != null) {
+            contact.setEnabled(false);
+        }
     }
 
     @Override
