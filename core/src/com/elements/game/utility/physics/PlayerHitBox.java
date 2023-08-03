@@ -1,9 +1,11 @@
 package com.elements.game.utility.physics;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.elements.game.view.GameCanvas;
 
 /**
  * A player hit-box is a custom capsule-shaped physics body. Usually a player is represented in the
@@ -106,5 +108,12 @@ public class PlayerHitBox extends CapsulePhysicsBody {
             body.destroyFixture(groundSensorFixture);
             groundSensorFixture = null;
         }
+    }
+
+    @Override
+    public void debug(GameCanvas canvas, Vector2 drawScale) {
+        super.debug(canvas, drawScale);
+        canvas.drawPhysics(groundSensorShape, Color.GREEN, getX(), getY(), getAngle(), drawScale.x,
+                           drawScale.y);
     }
 }

@@ -1,7 +1,10 @@
 package com.elements.game.utility.physics;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.elements.game.view.GameCanvas;
+import com.badlogic.gdx.graphics.Color;
 
 /**
  * Circle-shaped model to support collisions (non-hollow). <br>
@@ -76,5 +79,10 @@ public class CirclePhysicsBody extends PhysicsBody {
             body.destroyFixture(geometry);
             geometry = null;
         }
+    }
+
+    @Override
+    public void debug(GameCanvas canvas, Vector2 drawScale) {
+        canvas.drawPhysics(shape,Color.YELLOW,getX(),getY(),drawScale.x,drawScale.y);
     }
 }

@@ -16,6 +16,9 @@ public class InputController {
     /** whether the jump key was just pressed */
     private boolean jumpToggled;
 
+    /** whether the ability key was just pressed */
+    private boolean abilityToggled;
+
     /** horizontal movement */
     private float horizontal;
 
@@ -41,6 +44,8 @@ public class InputController {
     public boolean debugToggled() {
         return debugToggled;
     }
+
+    public boolean abilityToggled() { return abilityToggled; }
 
     /**
      * @return whether jump button was toggled
@@ -82,6 +87,7 @@ public class InputController {
         resetToggled = Gdx.input.isKeyJustPressed(Input.Keys.R);
         debugToggled = Gdx.input.isKeyJustPressed(Input.Keys.F1);
         jumpToggled = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+        abilityToggled = Gdx.input.isKeyJustPressed(Input.Keys.J);
 
         // get mouse position
         // mousePos.x = Gdx.input.getX();

@@ -1,0 +1,25 @@
+{ "columns":0,
+ "grid":
+    {
+     "height":1,
+     "orientation":"orthogonal",
+     "width":1
+    },
+ "margin":0,
+ "name":"objects",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"1.10.0",
+ "tileheight":48,
+ "tiles":[
+        {
+         "id":0,
+         "image":"grass.png",
+         "imageheight":48,
+         "imagewidth":48,
+         "type":"grass"
+        }],
+ "tilewidth":48,
+ "type":"tileset",
+ "version":"1.10"
+}

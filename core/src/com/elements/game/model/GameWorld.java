@@ -23,7 +23,7 @@ public class GameWorld implements Disposable {
     private final Vector2 gravity;
 
     /**
-     * Box2D world object
+     * Box2D world object (to reset level, you destroy the world and rebuild)
      */
     private World world;
 
@@ -91,9 +91,20 @@ public class GameWorld implements Disposable {
      *
      * @param o game object
      */
-    private void addToPhysicsWorld(CollidableObject o) {
+    public void addToPhysicsWorld(CollidableObject o) {
         gameObjects.add(o);
-        o.getHitBox().activatePhysics(world);
+        o.getHitBox().activatePhysics(world, o);
+    }
+
+    /**
+     * adds a fireball to the game world based on current player state (position)
+     * @param p the player instance
+     */
+    public void summonFireBall(Player p){
+        // make a new fireball (for now this is fine in terms of memory)
+        Fireball fireball = new Fireball(gameConstants.get("fireball"), p);
+        // add fireball to our list of objects so we can render
+        addToPhysicsWorld(fireball);
     }
 
     // BEGIN-REGION ======================== Accessors =======================================

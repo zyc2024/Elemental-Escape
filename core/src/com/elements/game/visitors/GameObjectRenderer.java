@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.elements.game.model.BlockPlatform;
+import com.elements.game.model.Fireball;
 import com.elements.game.model.Player;
 import com.elements.game.utility.assets.AssetDirectory;
 import com.elements.game.view.GameCanvas;
@@ -36,7 +37,6 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
         drawScale = new Vector2();
     }
 
-
     /**
      * updates the renderer's drawing scale
      *
@@ -44,6 +44,13 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
      * @param sy scaling of y dimension (1 unit tall in game -> sy pixels in screen space)
      */
     public void setDrawScale(float sx, float sy) {drawScale.set(sx, sy);}
+
+    /**
+     * updates the renderer's drawing scale
+     *
+     * @param scale scaling of x,y dimensions, see {@link #setDrawScale(float, float)}
+     */
+    public void setDrawScale(Vector2 scale) {drawScale.set(scale);}
 
     /**
      * stores and initializes all necessary assets to render game objects
@@ -76,6 +83,11 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
                     platform.getX() * drawScale.x, platform.getY() * drawScale.y,
                     platform.getHitBox().getAngle(), dimensions.x * drawScale.x / textureWidth,
                     dimensions.y * drawScale.y / textureHeight);
+        return null;
+    }
+
+    public Void visit(Fireball fireball){
+        // draw fireball
         return null;
     }
 

@@ -11,6 +11,16 @@
   },
   "platform": [
     {
+      "x": 4.5,
+      "y": 0.5,
+      "width": 1,
+      "height": 1,
+      "hit-box": {
+        "width": 1,
+        "height": 1
+      }
+    },
+    {
       "x": 3.5,
       "y": 0.5,
       "width": 1,
