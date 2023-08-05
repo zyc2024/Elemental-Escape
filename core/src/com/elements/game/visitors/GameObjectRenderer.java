@@ -26,6 +26,8 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
 
     private Texture grassTexture;
 
+    private TextureRegion fireballTexture;
+
     // END-REGION ==================== ASSETS ==================================
 
     private final Vector2 drawScale;
@@ -60,6 +62,9 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
     public void gatherAssets(AssetDirectory assets) {
         playerTexture = new TextureRegion(assets.getEntry("game:player", Texture.class));
         grassTexture = assets.getEntry("game:grass_block", Texture.class);
+        fireballTexture = new TextureRegion(assets.getEntry("game:fireball", Texture.class));
+        // TODO: I DUN KNOW
+        fireballTexture.setRegion(13, 0, 40, 30);
     }
 
     @Override
@@ -87,7 +92,15 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
     }
 
     public Void visit(Fireball fireball){
-        // draw fireball
+        Vector2 dimensions = fireball.getDisplayDimensions();
+        int textureWidth = fireballTexture.getRegionWidth();
+        int textureHeight = fireballTexture.getRegionHeight();
+        canvas.draw(fireballTexture, Color.WHITE, textureWidth / 2f, textureHeight / 2f,
+                    fireball.getX() * drawScale.x, fireball.getY() * drawScale.y,
+                    fireball.getHitBox().getAngle(),
+                    dimensions.x * drawScale.x / textureWidth,
+                    dimensions.y * drawScale.y / textureHeight);
+
         return null;
     }
 

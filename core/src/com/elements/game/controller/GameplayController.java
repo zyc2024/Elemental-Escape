@@ -61,12 +61,13 @@ public class GameplayController implements ContactListener {
             // there is left/right movement (horizontal is either -1 or 1)
             player.applyForce(cache.set(horizontal * walkForceMagnitude, 0));
         }
-        postUpdate(deltaTime);
 
         if (inputController.abilityToggled()) {
-            // suppose for now, summon fireball
-            gameWorld.summonFireBall(player);
+            // FIXME: How do I apply velocity upon creation of fireball
+            gameWorld.summonFireBall(player).applyVelocity(cache.set(10, 0));
         }
+
+        postUpdate(deltaTime);
     }
 
     /**
@@ -94,6 +95,8 @@ public class GameplayController implements ContactListener {
         CollidableObject objectA = (CollidableObject) bodyA.getUserData();
         CollidableObject objectB = (CollidableObject) bodyB.getUserData();
 
+//        detectFireballContact(fixtureA, fixtureB);
+
         //        Player playerObj = player.equals(objectA) ? (Player) objectA : null;
         //        playerObj = player.equals(objectB) ? (Player) objectB : playerObj;
 
@@ -107,6 +110,14 @@ public class GameplayController implements ContactListener {
         if (isPlayerSensor && platform != null) {
             player.setGrounded(true);
             groundSensorContacts.add(fixDataA == Player.GROUND_SENSOR_NAME ? fixtureB : fixtureA);
+        }
+
+        /* ----- fireball contact detection ----- */
+        Fireball fireball = objectA instanceof Fireball ? (Fireball) objectA : null;
+        fireball = objectB instanceof Fireball ? (Fireball) objectB : fireball;
+        if (fireball != null && platform != null) {
+            System.out.println("fireball hit a platform");
+            // TODO: make the fireball disappear and do death animation
         }
     }
 

@@ -100,11 +100,13 @@ public class GameWorld implements Disposable {
      * adds a fireball to the game world based on current player state (position)
      * @param p the player instance
      */
-    public void summonFireBall(Player p){
+    public Fireball summonFireBall(Player p){
         // make a new fireball (for now this is fine in terms of memory)
         Fireball fireball = new Fireball(gameConstants.get("fireball"), p);
         // add fireball to our list of objects so we can render
         addToPhysicsWorld(fireball);
+
+        return fireball;
     }
 
     // BEGIN-REGION ======================== Accessors =======================================
