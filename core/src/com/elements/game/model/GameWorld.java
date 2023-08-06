@@ -30,7 +30,7 @@ public class GameWorld implements Disposable {
     /**
      * collection of all game objects. Invariant: objects are sorted by their z-index
      */
-    private final List<CollidableObject> gameObjects;
+    private List<CollidableObject> gameObjects;
 
     private Player player;
 
@@ -132,6 +132,8 @@ public class GameWorld implements Disposable {
     public JsonValue getGameConstants() {
         return gameConstants;
     }
+
+    public void setGameObjects(List<CollidableObject> gameObjects) { this.gameObjects = gameObjects; }
 
     // END-REGION ========================== Accessors =======================================
 

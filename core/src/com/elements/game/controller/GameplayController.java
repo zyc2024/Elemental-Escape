@@ -2,9 +2,13 @@ package com.elements.game.controller;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.elements.game.model.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameplayController implements ContactListener {
 
@@ -63,7 +67,6 @@ public class GameplayController implements ContactListener {
         }
 
         if (inputController.abilityToggled()) {
-            // FIXME: How do I apply velocity upon creation of fireball
             gameWorld.summonFireBall(player).applyVelocity(cache.set(10, 0));
         }
 
@@ -76,12 +79,23 @@ public class GameplayController implements ContactListener {
      * @param deltaTime time spent in last game loop
      */
     private void postUpdate(float deltaTime) {
+        List<CollidableObject> gameObjects = new ArrayList<>();
+
         // (may not be necessary) update physics state of hit-boxes
         // TODO (later): method name needs renaming because not all game objects WILL be collidable.
         gameWorld.getWorld().step(1 / 60f, 6, 2);
         for (CollidableObject obj : gameWorld.getGameObjects()) {
             obj.getHitBox().update(deltaTime);
+
+            if (obj.getHitBox().isRemoved()) {
+                obj.getHitBox().deactivatePhysics(gameWorld.getWorld());
+            }
+            else {
+                gameObjects.add(obj);
+            }
         }
+
+        gameWorld.setGameObjects(gameObjects);
     }
 
     @Override
@@ -94,8 +108,6 @@ public class GameplayController implements ContactListener {
         Body bodyB = fixtureB.getBody();
         CollidableObject objectA = (CollidableObject) bodyA.getUserData();
         CollidableObject objectB = (CollidableObject) bodyB.getUserData();
-
-//        detectFireballContact(fixtureA, fixtureB);
 
         //        Player playerObj = player.equals(objectA) ? (Player) objectA : null;
         //        playerObj = player.equals(objectB) ? (Player) objectB : playerObj;
@@ -116,8 +128,7 @@ public class GameplayController implements ContactListener {
         Fireball fireball = objectA instanceof Fireball ? (Fireball) objectA : null;
         fireball = objectB instanceof Fireball ? (Fireball) objectB : fireball;
         if (fireball != null && platform != null) {
-            System.out.println("fireball hit a platform");
-            // TODO: make the fireball disappear and do death animation
+            fireball.getHitBox().markRemoved(true);
         }
     }
 
