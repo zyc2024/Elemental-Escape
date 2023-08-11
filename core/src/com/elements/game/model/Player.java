@@ -78,5 +78,9 @@ public class Player extends CollidableObject {
     public void setGrounded(boolean grounded) {
         isGrounded = grounded;
     }
+
+    public float getHorizontalVelocity() {
+        return hitBox.getBody().getLinearVelocity().x;
+    }
     
 }

@@ -7,6 +7,7 @@
     "game:background": "gameplay/background_repeat.png",
     "game:player": "gameplay/player.png",
     "game:grass_block": "gameplay/grass.png",
+    "game:wooden_block": "gameplay/wooden_block.png",
     "transition:black": "transitions/black.png"
   },
   "music" : {

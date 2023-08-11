@@ -29,7 +29,9 @@ public abstract class GameObjectVisitor<V> {
         return visit((GameObject) platform);
     }
 
-
+    public V visit(BlockMovable moveBlock){
+        return visit((GameObject) moveBlock);
+    }
 
     // add visit methods for other new classes, with default implementation returning null or
     // upcasting argument and using another visit method defined in file.
