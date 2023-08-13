@@ -8,7 +8,7 @@ import com.elements.game.visitors.GameObjectVisitor;
 
 public class BlockPlatform extends CollidableObject{
 
-    private final BoxPhysicsBody hitBox;
+    protected final BoxPhysicsBody hitBox;
 
     public BlockPlatform(JsonValue constants, JsonValue data, String objectNameTag){
         super(data.getFloat("width"), data.getFloat("height"));
