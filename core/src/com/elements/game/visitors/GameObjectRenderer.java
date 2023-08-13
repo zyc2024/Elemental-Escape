@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.elements.game.model.WoodBlock;
 import com.elements.game.model.BlockPlatform;
 import com.elements.game.model.Fireball;
 import com.elements.game.model.Player;
+import com.elements.game.model.WoodBlock;
 import com.elements.game.utility.assets.AssetDirectory;
 import com.elements.game.view.GameCanvas;
 
@@ -96,13 +96,13 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
         int textureWidth = woodenTexture.getWidth();
         int textureHeight = woodenTexture.getHeight();
         canvas.draw(woodenTexture, Color.WHITE, textureWidth / 2f, textureHeight / 2f,
-                moveBlock.getX() * drawScale.x, moveBlock.getY() * drawScale.y,
-                moveBlock.getHitBox().getAngle(), dimensions.x * drawScale.x / textureWidth,
-                dimensions.y * drawScale.y / textureHeight);
+                    moveBlock.getX() * drawScale.x, moveBlock.getY() * drawScale.y,
+                    moveBlock.getHitBox().getAngle(), dimensions.x * drawScale.x / textureWidth,
+                    dimensions.y * drawScale.y / textureHeight);
         return null;
     }
 
-    public Void visit(Fireball fireball){
+    public Void visit(Fireball fireball) {
         // draw fireball
         return null;
     }

@@ -10,6 +10,7 @@ public class GameplayController implements ContactListener {
 
     private final JsonValue gameConstants;
 
+
     /**
      * reference to the world object
      */
@@ -35,7 +36,6 @@ public class GameplayController implements ContactListener {
 
     private final ObjectSet<Fixture> groundSensorContacts;
 
-
     public GameplayController(GameWorld gameWorld, JsonValue gameConstants) {
         inputController = new InputController();
         cache = new Vector2();
@@ -57,7 +57,6 @@ public class GameplayController implements ContactListener {
         player = gameWorld.getPlayer();
     }
 
-
     public void update(float deltaTime) {
         // NOTE: if you want to see which keys to press to move player, go to InputController class
         inputController.readInput();
@@ -73,7 +72,8 @@ public class GameplayController implements ContactListener {
                 player.applyForce(cache.set(horizontal * walkForceMagnitude, 0));
             } else {
                 // no force is applied when velocity is greater than the max
-                player.applyForce(cache.set(horizontal * walkForceMagnitude * ((((int) Math.abs(player.getHorizontalVelocity()) / maxHorizontalVelocity) + 1) % 2), 0));
+                player.applyForce(cache.set(horizontal * walkForceMagnitude * ((((int) Math.abs(
+                        player.getHorizontalVelocity()) / maxHorizontalVelocity) + 1) % 2), 0));
             }
         }
 
