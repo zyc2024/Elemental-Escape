@@ -83,6 +83,14 @@ public class GameWorld implements Disposable {
             addToPhysicsWorld(platform);
         }
 
+        // movable blocks
+        JsonValue movableDataSet = levelData.get("wood");
+        for (int i = 0; i < movableDataSet.size; i++) {
+            JsonValue data = movableDataSet.get(i);
+            WoodBlock moveBlock = new WoodBlock(gameConstants.get("movable"), data, "movable_" + i);
+            addToPhysicsWorld(moveBlock);
+        }
+
         gameObjects.sort((o1, o2) -> o2.getZIndex() - o1.getZIndex());
     }
 

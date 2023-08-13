@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.elements.game.model.BlockPlatform;
 import com.elements.game.model.Fireball;
 import com.elements.game.model.Player;
+import com.elements.game.model.WoodBlock;
 import com.elements.game.utility.assets.AssetDirectory;
 import com.elements.game.view.GameCanvas;
 
@@ -25,6 +26,8 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
     private TextureRegion playerTexture;
 
     private Texture grassTexture;
+
+    private Texture woodenTexture;
 
     // END-REGION ==================== ASSETS ==================================
 
@@ -60,6 +63,7 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
     public void gatherAssets(AssetDirectory assets) {
         playerTexture = new TextureRegion(assets.getEntry("game:player", Texture.class));
         grassTexture = assets.getEntry("game:grass_block", Texture.class);
+        woodenTexture = assets.getEntry("game:wooden_block", Texture.class);
     }
 
     @Override
@@ -86,7 +90,19 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
         return null;
     }
 
-    public Void visit(Fireball fireball){
+    @Override
+    public Void visit(WoodBlock moveBlock) {
+        Vector2 dimensions = moveBlock.getDisplayDimensions();
+        int textureWidth = woodenTexture.getWidth();
+        int textureHeight = woodenTexture.getHeight();
+        canvas.draw(woodenTexture, Color.WHITE, textureWidth / 2f, textureHeight / 2f,
+                    moveBlock.getX() * drawScale.x, moveBlock.getY() * drawScale.y,
+                    moveBlock.getHitBox().getAngle(), dimensions.x * drawScale.x / textureWidth,
+                    dimensions.y * drawScale.y / textureHeight);
+        return null;
+    }
+
+    public Void visit(Fireball fireball) {
         // draw fireball
         return null;
     }

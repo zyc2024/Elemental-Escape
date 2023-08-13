@@ -12,7 +12,7 @@ public class Player extends CollidableObject {
     public static final String GROUND_SENSOR_NAME = "playerSensor";
 
     private final PlayerHitBox hitBox;
-    
+
     boolean isGrounded;
 
     public Player(JsonValue playerConstants, JsonValue playerData) {
@@ -55,6 +55,7 @@ public class Player extends CollidableObject {
 
     /**
      * applies the given impulse onto the player at the center of the player's body.
+     *
      * @param impulse undocumented
      */
     public void applyImpulse(Vector2 impulse) {
@@ -79,5 +80,8 @@ public class Player extends CollidableObject {
     public void setGrounded(boolean grounded) {
         isGrounded = grounded;
     }
-    
+
+    public float getHorizontalVelocity() {
+        return hitBox.getBody().getLinearVelocity().x;
+    }
 }
