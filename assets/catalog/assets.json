@@ -1,12 +1,14 @@
 {
   "jsons": {
     "constants": "levels/constants.json",
-    "level0": "levels/level0.json"
+    "level0": "levels/level0.json",
+    "tileset": "tiled/tileset.json"
   },
   "textures": {
     "game:background": "gameplay/background_repeat.png",
     "game:player": "gameplay/player.png",
     "game:grass_block": "gameplay/grass.png",
+    "game:wooden_block": "gameplay/wooden_block.png",
     "transition:black": "transitions/black.png"
   },
   "music" : {

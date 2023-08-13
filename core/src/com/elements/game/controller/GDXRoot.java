@@ -3,6 +3,9 @@ package com.elements.game.controller;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.elements.game.utility.assets.AssetDirectory;
 import com.elements.game.view.GameCanvas;
 import com.elements.game.view.screen.GameScreen;
@@ -22,6 +25,20 @@ public class GDXRoot extends Game {
     //private TransitionalScreen transitionScreen;
 
     private GameCanvas canvas;
+
+    /** filepath to the test level*/
+    private final String filePath;
+
+    /** a test level can be used for partial level development */
+    private JsonValue testLevel;
+
+    public GDXRoot(String filePath){
+        this.filePath = filePath;
+    }
+
+    public GDXRoot(){
+        this("");
+    }
 
     /**
      * Sets the current screen, {@link Screen#hide()} is called on any old screen, and
@@ -79,6 +96,15 @@ public class GDXRoot extends Game {
             //transitionScreen.gatherAssets(assetDirectory);
             //transitionScreen.setTransition(loadingScreen, gameplayScreen);
             //setScreen(transitionScreen);
+            if (filePath.length() > 0){
+                String filePath = Gdx.files.local(this.filePath).file().getAbsolutePath();
+                // Load the JSON file into a FileHandle
+                FileHandle fileHandle = Gdx.files.absolute(filePath);
+                String jsonString = fileHandle.readString();
+                // Parse the JSON string into a JsonValue object
+                testLevel = new JsonReader().parse(jsonString);
+                gameplayScreen.setTestLevel(testLevel);
+            }
             // TODO (later): this is obviously temporary, with a level selector, the loading
             //  screen would quit to main menu followed by some level selector and finally the
             //  selected level would be passed to the gameplay screen to load.

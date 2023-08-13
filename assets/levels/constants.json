@@ -3,7 +3,13 @@
     "density": 1.0,
     "friction": 0.8,
     "walkForce": 10,
-    "jumpForce": 5
+    "jumpForce": 5,
+    "width": 1.07541666667,
+    "height": 1.27083333333,
+    "hit-box": {
+      "width": 0.8,
+      "height": 1.27083
+    }
   },
   "fireball": {
     "offset_x": 0.3,

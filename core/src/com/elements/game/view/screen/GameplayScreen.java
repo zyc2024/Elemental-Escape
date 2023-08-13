@@ -10,6 +10,7 @@ import com.elements.game.controller.GameplayController;
 import com.elements.game.model.CollidableObject;
 import com.elements.game.model.GameWorld;
 import com.elements.game.utility.assets.AssetDirectory;
+import com.elements.game.utility.json.LevelParser;
 import com.elements.game.view.GameCanvas;
 import com.elements.game.visitors.GameObjectRenderer;
 
@@ -21,6 +22,8 @@ public class GameplayScreen extends GameScreen {
     private AssetDirectory assetDirectory;
 
     private JsonValue levelData;
+
+    private JsonValue testLevelData;
 
     private final GameCanvas canvas;
 
@@ -36,6 +39,8 @@ public class GameplayScreen extends GameScreen {
 
     private GameWorld gameWorld;
 
+    private LevelParser parser;
+
     /** whether debug mode is active */
     private boolean debug;
 
@@ -43,7 +48,7 @@ public class GameplayScreen extends GameScreen {
     public GameplayScreen(GameCanvas canvas) {
         this.canvas = canvas;
         this.renderer = new GameObjectRenderer(canvas);
-        this.drawScale = new Vector2(1,1);
+        this.drawScale = new Vector2(1, 1);
     }
 
     @Override
@@ -54,6 +59,8 @@ public class GameplayScreen extends GameScreen {
         JsonValue gameConstants = assets.getEntry("constants", JsonValue.class);
         gameWorld = new GameWorld(gameConstants);
         gameplayController = new GameplayController(gameWorld, gameConstants);
+        parser = new LevelParser(this.assetDirectory);
+
     }
 
     private void update(float delta) {
@@ -94,8 +101,22 @@ public class GameplayScreen extends GameScreen {
      * @param level game level id
      */
     public void setLevel(int level) {
-        levelData = assetDirectory.getEntry("level" + level, JsonValue.class);
+        // hijack the current level with an external level
+        if (this.testLevelData != null){
+            levelData = testLevelData;
+        }
+        else {
+            levelData = assetDirectory.getEntry("level" + level, JsonValue.class);
+        }
         reset();
+    }
+
+    /**
+     * sets a temporary development level as the current level
+     * @param testLevelData sample level
+     */
+    public void setTestLevel(JsonValue testLevelData) {
+        this.testLevelData = testLevelData;
     }
 
     /**
@@ -105,7 +126,9 @@ public class GameplayScreen extends GameScreen {
         // the game world (container) empties and loads the level. The controller resets itself
         // and is ready to update the world.
         gameWorld.dispose();
-        gameWorld.populate(levelData);
+        JsonValue parsedData = parser.parse(levelData);
+        System.out.println(parsedData);
+        gameWorld.populate(parsedData);
         gameplayController.reset();
         // TODO (later): set draw scale (conversion from 1 unit of game to number of pixels based
         //  on the desired number of game units to render). For instance, right now the
