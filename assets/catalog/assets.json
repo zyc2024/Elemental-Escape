@@ -7,8 +7,10 @@
     "game:background": "gameplay/background_repeat.png",
     "game:player": "gameplay/player.png",
     "game:grass_block": "gameplay/grass.png",
+
     "transition:black": "transitions/black.png",
-    "game:fireball": "gameplay/fireball.png"
+    "game:fireball": "gameplay/fireball.png",
+    "game:wooden_block": "gameplay/wooden_block.png"
   },
   "music" : {
     "music:menu": "template_music/menu.wav",

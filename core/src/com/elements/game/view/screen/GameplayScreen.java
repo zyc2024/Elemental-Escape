@@ -75,9 +75,7 @@ public class GameplayScreen extends GameScreen {
                     background.getRegionHeight() / 2f, camera.position.x, camera.position.y, 0,
                     viewport.getWorldWidth() / background.getRegionWidth(),
                     viewport.getWorldHeight() / background.getRegionHeight());
-        gameWorld.getGameObjects().forEach((CollidableObject co) -> {
-            co.accept(renderer);
-        });
+        gameWorld.getGameObjects().forEach(co -> co.accept(renderer));
         canvas.end();
         if (debug) {
             canvas.beginDebug(camera);

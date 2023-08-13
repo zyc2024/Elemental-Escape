@@ -14,23 +14,31 @@ public class GameplayController implements ContactListener {
 
     private final JsonValue gameConstants;
 
-    /** reference to the world object */
+
+    /**
+     * reference to the world object
+     */
     private final GameWorld gameWorld;
 
     private Player player;
 
-    /** controller to read gameplay inputs */
+    /**
+     * controller to read gameplay inputs
+     */
     private final InputController inputController;
 
-    /** vector cache to be used for computations */
+    /**
+     * vector cache to be used for computations
+     */
     private final Vector2 cache;
 
     private final float jumpForceMagnitude;
 
     private final float walkForceMagnitude;
 
-    private final ObjectSet<Fixture> groundSensorContacts;
+    private final float maxHorizontalVelocity;
 
+    private final ObjectSet<Fixture> groundSensorContacts;
 
     public GameplayController(GameWorld gameWorld, JsonValue gameConstants) {
         inputController = new InputController();
@@ -41,6 +49,7 @@ public class GameplayController implements ContactListener {
         JsonValue playerConstants = gameConstants.get("player");
         jumpForceMagnitude = playerConstants.getFloat("jumpForce");
         walkForceMagnitude = playerConstants.getFloat("walkForce");
+        maxHorizontalVelocity = playerConstants.getFloat("maxVelocity");
     }
 
     /**
@@ -52,7 +61,6 @@ public class GameplayController implements ContactListener {
         player = gameWorld.getPlayer();
     }
 
-
     public void update(float deltaTime) {
         // NOTE: if you want to see which keys to press to move player, go to InputController class
         inputController.readInput();
@@ -63,7 +71,14 @@ public class GameplayController implements ContactListener {
         float horizontal = inputController.getHorizontal();
         if (Math.abs(horizontal) > 0) {
             // there is left/right movement (horizontal is either -1 or 1)
-            player.applyForce(cache.set(horizontal * walkForceMagnitude, 0));
+            if ((int) player.getHorizontalVelocity() * horizontal < 0) {
+                // apply force when player wants to go the other way
+                player.applyForce(cache.set(horizontal * walkForceMagnitude, 0));
+            } else {
+                // no force is applied when velocity is greater than the max
+                player.applyForce(cache.set(horizontal * walkForceMagnitude * ((((int) Math.abs(
+                        player.getHorizontalVelocity()) / maxHorizontalVelocity) + 1) % 2), 0));
+            }
         }
 
         if (inputController.abilityToggled()) {
@@ -161,7 +176,8 @@ public class GameplayController implements ContactListener {
 
     /**
      * preSolve() is useful for modifying contact before it runs through beginContact()
-     * @param contact box2d contact
+     *
+     * @param contact     box2d contact
      * @param oldManifold physics manifold
      */
     @Override
