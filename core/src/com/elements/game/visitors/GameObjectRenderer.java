@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.elements.game.model.BlockMovable;
+import com.elements.game.model.WoodBlock;
 import com.elements.game.model.BlockPlatform;
 import com.elements.game.model.Fireball;
 import com.elements.game.model.Player;
@@ -91,7 +91,7 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
     }
 
     @Override
-    public Void visit(BlockMovable moveBlock) {
+    public Void visit(WoodBlock moveBlock) {
         Vector2 dimensions = moveBlock.getDisplayDimensions();
         int textureWidth = woodenTexture.getWidth();
         int textureHeight = woodenTexture.getHeight();

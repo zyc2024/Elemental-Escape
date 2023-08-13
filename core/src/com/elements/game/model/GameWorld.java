@@ -87,7 +87,7 @@ public class GameWorld implements Disposable {
         JsonValue movableDataSet = levelData.get("movable");
         for (int i = 0; i < movableDataSet.size; i++) {
             JsonValue data = movableDataSet.get(i);
-            BlockMovable moveBlock = new BlockMovable(gameConstants.get("movable"), data, "movable_" + i);
+            WoodBlock moveBlock = new WoodBlock(gameConstants.get("movable"), data, "movable_" + i);
             addToPhysicsWorld(moveBlock);
         }
 

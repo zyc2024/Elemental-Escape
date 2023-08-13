@@ -29,7 +29,7 @@ public abstract class GameObjectVisitor<V> {
         return visit((GameObject) platform);
     }
 
-    public V visit(BlockMovable moveBlock){
+    public V visit(WoodBlock moveBlock){
         return visit((GameObject) moveBlock);
     }
 

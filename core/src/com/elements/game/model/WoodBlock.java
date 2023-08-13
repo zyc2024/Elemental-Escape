@@ -2,12 +2,10 @@ package com.elements.game.model;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.JsonValue;
-import com.elements.game.utility.physics.BoxPhysicsBody;
-import com.elements.game.utility.physics.PhysicsBody;
 import com.elements.game.visitors.GameObjectVisitor;
 
-public class BlockMovable extends BlockPlatform {
-    public BlockMovable(JsonValue constants, JsonValue data, String objectNameTag) {
+public class WoodBlock extends BlockPlatform {
+    public WoodBlock(JsonValue constants, JsonValue data, String objectNameTag) {
         super(constants, data, objectNameTag);
 
         hitBox.setBodyType(BodyDef.BodyType.DynamicBody);
