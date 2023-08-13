@@ -10,15 +10,21 @@ public class GameplayController implements ContactListener {
 
     private final JsonValue gameConstants;
 
-    /** reference to the world object */
+    /**
+     * reference to the world object
+     */
     private final GameWorld gameWorld;
 
     private Player player;
 
-    /** controller to read gameplay inputs */
+    /**
+     * controller to read gameplay inputs
+     */
     private final InputController inputController;
 
-    /** vector cache to be used for computations */
+    /**
+     * vector cache to be used for computations
+     */
     private final Vector2 cache;
 
     private final float jumpForceMagnitude;
@@ -149,7 +155,8 @@ public class GameplayController implements ContactListener {
 
     /**
      * preSolve() is useful for modifying contact before it runs through beginContact()
-     * @param contact box2d contact
+     *
+     * @param contact     box2d contact
      * @param oldManifold physics manifold
      */
     @Override
