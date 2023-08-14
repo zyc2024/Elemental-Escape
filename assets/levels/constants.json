@@ -2,8 +2,14 @@
   "player": {
     "density": 1.0,
     "friction": 0.8,
-    "walkForce": 8,
+    "walkForce": 10,
     "jumpForce": 5,
+    "width": 1.07541666667,
+    "height": 1.27083333333,
+    "hit-box": {
+      "width": 0.8,
+      "height": 1.27083
+    },
     "maxVelocity": 3.2
   },
   "fireball": {
@@ -12,7 +18,7 @@
   },
   "movable": {
     "density": 12.0,
-    "friction": 0.4,
+    "friction": 0,
     "restitution": 0.1
   },
   "density": 0.5,

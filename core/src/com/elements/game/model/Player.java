@@ -18,8 +18,8 @@ public class Player extends CollidableObject {
     private int facing;
 
     public Player(JsonValue playerConstants, JsonValue playerData) {
-        super(playerData.getFloat("width"), playerData.getFloat("height"));
-        JsonValue hitBoxData = playerData.get("hit-box");
+        super(playerConstants.getFloat("width"), playerConstants.getFloat("height"));
+        JsonValue hitBoxData = playerConstants.get("hit-box");
         float width = hitBoxData.getFloat("width", 0.5f);
         float height = hitBoxData.getFloat("height", 1);
         float x = playerData.getFloat("x", 0);
