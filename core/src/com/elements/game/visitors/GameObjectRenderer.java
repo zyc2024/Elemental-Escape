@@ -9,6 +9,7 @@ import com.elements.game.model.Fireball;
 import com.elements.game.model.Player;
 import com.elements.game.model.WoodBlock;
 import com.elements.game.utility.assets.AssetDirectory;
+import com.elements.game.utility.textures.FilmStrip;
 import com.elements.game.view.GameCanvas;
 
 /**
@@ -29,15 +30,34 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
 
     private Texture woodenTexture;
 
+    /**
+     * Animations for base form.
+     * Index 0 = idling
+     * Index 1 = walking
+     * Index 2 = rising
+     * Index 3 = falling
+     */
+    private FilmStrip[] base_animations;
+
     // END-REGION ==================== ASSETS ==================================
+
+    private static final int ANIMATION_FPS = 6;
+
+    private static final float TOLERANCE = 0.5F;
 
     private final Vector2 drawScale;
 
     private final GameCanvas canvas;
 
+    private int frameCounter;
+
+    private int animator;
+
     public GameObjectRenderer(GameCanvas canvas) {
         this.canvas = canvas;
         drawScale = new Vector2();
+        base_animations = new FilmStrip[4];
+        animator = 0;
     }
 
     /**
@@ -64,17 +84,49 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
         playerTexture = new TextureRegion(assets.getEntry("game:player", Texture.class));
         grassTexture = assets.getEntry("game:grass_block", Texture.class);
         woodenTexture = assets.getEntry("game:wooden_block", Texture.class);
+
+        base_animations[0] = new FilmStrip(assets.getEntry("game:player_base_idling", Texture.class), 1, 10);
+        base_animations[1] = new FilmStrip(assets.getEntry("game:player_base_walking", Texture.class), 1, 8);
+        base_animations[2] = new FilmStrip(assets.getEntry("game:player_base_rising", Texture.class), 1, 6);
+        base_animations[3] = new FilmStrip(assets.getEntry("game:player_base_falling", Texture.class), 1, 8);
     }
 
     @Override
     public Void visit(Player p) {
         Vector2 dimensions = p.getDisplayDimensions();
-        int textureWidth = playerTexture.getRegionWidth();
-        int textureHeight = playerTexture.getRegionHeight();
-        canvas.draw(playerTexture, Color.WHITE, textureWidth / 2f, textureHeight / 2f,
+        int textureWidth = playerTexture.getRegionWidth() * 4;
+        int textureHeight = playerTexture.getRegionHeight() * 4;
+        // TODO: clean this code up
+        // change to falling/rising animation when not on ground
+        if (!p.isGrounded()) {
+            int prevAnimator = animator;
+            // determines rise or fall using player's vertical velocity
+            animator = p.getVerticalVelocity() > TOLERANCE ? 2 : 3;
+            // resets filmstrip frame initially
+            if (prevAnimator != animator) {
+                base_animations[animator].setFrame(0);
+            }
+        } else if (Math.abs(p.getHorizontalVelocity()) > TOLERANCE) {
+            // changes to walking animation when horizontal velocity exceeds certain threshold
+            animator = 1;
+        } else if (animator != 0) {
+            // otherwise idling
+            animator = 0;
+        }
+
+        // draws
+        canvas.draw(base_animations[animator], Color.WHITE, textureWidth / 1.4F, textureHeight / 2F,
                     p.getX() * drawScale.x, p.getY() * drawScale.y, p.getHitBox().getAngle(),
-                    dimensions.x * drawScale.x / textureWidth,
+                    p.getFacing() * dimensions.x * drawScale.x / textureWidth,
                     dimensions.y * drawScale.y / textureHeight);
+
+        // increment frame depending on animation fps
+        if (frameCounter % ANIMATION_FPS == 0) {
+            base_animations[animator].setFrame((base_animations[animator].getFrame() + 1) % base_animations[animator].getSize());
+            frameCounter = 0;
+        }
+        frameCounter++;
+
         return null;
     }
 

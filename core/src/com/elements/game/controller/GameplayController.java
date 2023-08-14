@@ -67,16 +67,15 @@ public class GameplayController implements ContactListener {
         float horizontal = inputController.getHorizontal();
         if (Math.abs(horizontal) > 0) {
             // there is left/right movement (horizontal is either -1 or 1)
+            player.setFacing((int) horizontal);
             if ((int) player.getHorizontalVelocity() * horizontal < 0) {
                 // apply force when player wants to go the other way
                 player.applyForce(cache.set(horizontal * walkForceMagnitude, 0));
             } else {
                 // no force is applied when velocity is greater than the max
-                player.applyForce(cache.set(horizontal * walkForceMagnitude * ((((int) Math.abs(
-                        player.getHorizontalVelocity()) / maxHorizontalVelocity) + 1) % 2), 0));
+                player.applyForce(cache.set(horizontal * walkForceMagnitude * ((1 + (int) (Math.abs(player.getHorizontalVelocity()) / maxHorizontalVelocity)) % 2), 0));
             }
         }
-
         postUpdate(deltaTime);
 
         if (inputController.abilityToggled()) {

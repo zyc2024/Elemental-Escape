@@ -8,7 +8,11 @@
     "game:player": "gameplay/player.png",
     "game:grass_block": "gameplay/grass.png",
     "game:wooden_block": "gameplay/wooden_block.png",
-    "transition:black": "transitions/black.png"
+    "transition:black": "transitions/black.png",
+    "game:player_base_idling": "gameplay/base_idling.png",
+    "game:player_base_walking": "gameplay/base_walking.png",
+    "game:player_base_rising": "gameplay/base_rising.png",
+    "game:player_base_falling": "gameplay/base_falling.png"
   },
   "music" : {
     "music:menu": "template_music/menu.wav",

@@ -13,7 +13,9 @@ public class Player extends CollidableObject {
 
     private final PlayerHitBox hitBox;
 
-    boolean isGrounded;
+    private boolean isGrounded;
+
+    private int facing;
 
     public Player(JsonValue playerConstants, JsonValue playerData) {
         super(playerData.getFloat("width"), playerData.getFloat("height"));
@@ -34,6 +36,7 @@ public class Player extends CollidableObject {
         hitBox.setGroundSensorName(GROUND_SENSOR_NAME);
         // assign name to hit-box for debugging
         hitBox.setName("playerHitBox");
+        facing = 1;
     }
 
     /**
@@ -73,15 +76,53 @@ public class Player extends CollidableObject {
         return v.visit(this);
     }
 
+    /**
+     * Gets whether the player is on the ground.
+     *
+     * @return on ground
+     */
     public boolean isGrounded() {
         return isGrounded;
     }
 
+    /**
+     * Sets the player ground state.
+     *
+     * @param grounded is on ground
+     */
     public void setGrounded(boolean grounded) {
         isGrounded = grounded;
     }
 
+    /**
+     * Gets the horizontal velocity of the player.
+     *
+     * @return horizontal velocity
+     */
     public float getHorizontalVelocity() {
         return hitBox.getBody().getLinearVelocity().x;
     }
+
+    /**
+     * Gets the vertical velocity of the player.
+     *
+     * @return vertical velocity
+     */
+    public float getVerticalVelocity() { return hitBox.getBody().getLinearVelocity().y; }
+
+    /**
+     * Gets the direction the player is facing.
+     * 1 for right
+     * -1 for left
+     *
+     * @return facing
+     */
+    public int getFacing() { return facing; }
+
+    /**
+     * Sets player facing direction.
+     *
+     * @param face the direction to face
+     */
+    public void setFacing(int face) { facing = face; }
 }
