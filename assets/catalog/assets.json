@@ -1,7 +1,8 @@
 {
   "jsons": {
     "constants": "levels/constants.json",
-    "level0": "levels/level0.json"
+    "level0": "tiled/sample.json",
+    "tileset": "tiled/tileset.json"
   },
   "textures": {
     "game:background": "gameplay/background_repeat.png",

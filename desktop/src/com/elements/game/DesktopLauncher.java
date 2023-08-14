@@ -13,7 +13,12 @@ public class DesktopLauncher {
 		config.setTitle("Elemental Escape");
 		config.setWindowedMode(800, 450);
 		config.setResizable(true);
-
-		new Lwjgl3Application(new GDXRoot(), config);
+		if (arg.length > 0) {
+			new Lwjgl3Application(new GDXRoot(arg[0]), config);
+		}
+		else {
+			// standard, use this branch for shipping
+			new Lwjgl3Application(new GDXRoot(), config);
+		}
 	}
 }

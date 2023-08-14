@@ -7,8 +7,9 @@
     },
  "margin":0,
  "name":"objects",
+ "objectalignment":"center",
  "spacing":0,
- "tilecount":1,
+ "tilecount":2,
  "tiledversion":"1.10.0",
  "tileheight":48,
  "tiles":[
@@ -18,8 +19,22 @@
          "imageheight":48,
          "imagewidth":48,
          "type":"grass"
+        }, 
+        {
+         "id":1,
+         "image":"..\/gameplay\/wooden_block.png",
+         "imageheight":48,
+         "imagewidth":48,
+         "type":"wood"
         }],
  "tilewidth":48,
+ "transformations":
+    {
+     "hflip":true,
+     "preferuntransformed":false,
+     "rotate":false,
+     "vflip":true
+    },
  "type":"tileset",
  "version":"1.10"
 }
