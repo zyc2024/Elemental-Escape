@@ -65,6 +65,8 @@ public class GameplayController implements ContactListener {
         }
 
         float horizontal = inputController.getHorizontal();
+
+        // TODO: make horizontal force when in air to be less than on ground
         if (Math.abs(horizontal) > 0) {
             // there is left/right movement (horizontal is either -1 or 1)
             player.setFacing((int) horizontal);
@@ -73,7 +75,8 @@ public class GameplayController implements ContactListener {
                 player.applyForce(cache.set(horizontal * walkForceMagnitude, 0));
             } else {
                 // no force is applied when velocity is greater than the max
-                player.applyForce(cache.set(horizontal * walkForceMagnitude * ((1 + (int) (Math.abs(player.getHorizontalVelocity()) / maxHorizontalVelocity)) % 2), 0));
+                player.applyForce(cache.set(horizontal * walkForceMagnitude
+                        * ((1 + (int) (Math.abs(player.getHorizontalVelocity()) / maxHorizontalVelocity)) % 2), 0));
             }
         }
         postUpdate(deltaTime);

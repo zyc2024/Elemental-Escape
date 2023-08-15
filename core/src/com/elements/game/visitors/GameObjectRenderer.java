@@ -96,7 +96,9 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
         Vector2 dimensions = p.getDisplayDimensions();
         int textureWidth = playerTexture.getRegionWidth() * 4;
         int textureHeight = playerTexture.getRegionHeight() * 4;
-        // TODO: clean this code up
+        // TODO: clean this code up. Add Possibly landing animation.
+        //  Minor bug when player jumps forward and slightly clips the corner of a block, causing an animation rewind (looks bad)
+
         // change to falling/rising animation when not on ground
         if (!p.isGrounded()) {
             int prevAnimator = animator;
