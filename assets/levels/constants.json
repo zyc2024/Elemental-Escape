@@ -4,13 +4,13 @@
     "friction": 0.8,
     "walkForce": 10,
     "jumpForce": 5.1,
-    "width": 1.07541666667,
+    "width": 1.07041666667,
     "height": 1.27083333333,
     "hit-box": {
       "width": 0.575,
       "height": 1.300583333
     },
-    "maxVelocity": 3.2
+    "maxVelocity": 3.25
   },
   "fireball": {
     "offset_x": 0.3,

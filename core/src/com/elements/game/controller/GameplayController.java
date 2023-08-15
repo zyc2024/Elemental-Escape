@@ -66,7 +66,6 @@ public class GameplayController implements ContactListener {
 
         float horizontal = inputController.getHorizontal();
 
-        // TODO: make horizontal force when in air to be less than on ground
         if (Math.abs(horizontal) > 0) {
             // there is left/right movement (horizontal is either -1 or 1)
             player.setFacing((int) horizontal);
