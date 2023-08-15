@@ -87,7 +87,7 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
 
         base_animations[0] = new FilmStrip(assets.getEntry("game:player_base_idling", Texture.class), 1, 10);
         base_animations[1] = new FilmStrip(assets.getEntry("game:player_base_walking", Texture.class), 1, 8);
-        base_animations[2] = new FilmStrip(assets.getEntry("game:player_base_rising", Texture.class), 1, 6);
+        base_animations[2] = new FilmStrip(assets.getEntry("game:player_base_rising", Texture.class), 1, 7);
         base_animations[3] = new FilmStrip(assets.getEntry("game:player_base_falling", Texture.class), 1, 8);
     }
 
@@ -122,7 +122,12 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
 
         // increment frame depending on animation fps
         if (frameCounter % ANIMATION_FPS == 0) {
-            base_animations[animator].setFrame((base_animations[animator].getFrame() + 1) % base_animations[animator].getSize());
+            // loops rise/fall middle section of animation instead when continuously falling at great speeds
+            if (animator > 1 & Math.abs(p.getVerticalVelocity()) > 3 && base_animations[animator].getFrame() > animator + 1) {
+                base_animations[animator].setFrame((base_animations[animator].getFrame() - 2));
+            } else {
+                base_animations[animator].setFrame((base_animations[animator].getFrame() + 1) % base_animations[animator].getSize());
+            }
             frameCounter = 0;
         }
         frameCounter++;

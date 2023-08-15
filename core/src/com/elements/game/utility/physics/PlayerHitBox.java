@@ -16,7 +16,7 @@ public class PlayerHitBox extends CapsulePhysicsBody {
 
     private static final float DEFAULT_SENSOR_WIDTH_RATIO = 0.5f;
 
-    private static final float DEFAULT_SENSOR_HEIGHT = 0.05f;
+    private static final float DEFAULT_SENSOR_HEIGHT = 0.04f;
 
     protected PolygonShape groundSensorShape;
 
@@ -87,7 +87,7 @@ public class PlayerHitBox extends CapsulePhysicsBody {
         // To determine whether the player is on the ground,
         // we create a thin sensor under the feet, which reports
         // collisions with the world but has no collision response.
-        Vector2 sensorCenter = new Vector2(0, -getHeight() / 2);
+        Vector2 sensorCenter = new Vector2(0, -getHeight() / 2 + groundSensorHeight / 1.5F);
         FixtureDef sensorDef = new FixtureDef();
         sensorDef.density = getDensity();
         sensorDef.isSensor = true;
