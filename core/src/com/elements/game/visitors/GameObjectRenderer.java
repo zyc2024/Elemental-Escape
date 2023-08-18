@@ -123,7 +123,7 @@ public class GameObjectRenderer extends GameObjectVisitor<Void> {
 
         // increment frame depending on animation fps
         if (frameCounter % ANIMATION_FPS == 0) {
-            // loops rise/fall middle section of animation instead when continuously falling at great speeds
+            // loops rise/fall middle section of animation instead when continuously rising/falling at great speeds
             if (animator > 1 & Math.abs(p.getVerticalVelocity()) > 3 && base_animations[animator].getFrame() > animator + 1) {
                 base_animations[animator].setFrame((base_animations[animator].getFrame() - 2));
             } else {
