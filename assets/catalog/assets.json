@@ -10,10 +10,10 @@
     "game:grass_block": "gameplay/grass.png",
     "game:wooden_block": "gameplay/wooden_block.png",
     "transition:black": "transitions/black.png",
-    "game:player_base_idling": "gameplay/water_idling.png",
-    "game:player_base_walking": "gameplay/water_walking.png",
-    "game:player_base_rising": "gameplay/water_rising.png",
-    "game:player_base_falling": "gameplay/water_falling.png"
+    "game:player_base_idling": "gameplay/air_idling.png",
+    "game:player_base_walking": "gameplay/air_walking.png",
+    "game:player_base_rising": "gameplay/air_rising.png",
+    "game:player_base_falling": "gameplay/air_falling.png"
   },
   "music" : {
     "music:menu": "template_music/menu.wav",
