@@ -23,4 +23,9 @@ public class PauseScreen extends GameScreen {
     public int exitCode() {
         return 0;
     }
+
+    @Override
+    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
 }

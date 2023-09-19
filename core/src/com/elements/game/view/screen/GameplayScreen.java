@@ -131,4 +131,9 @@ public class GameplayScreen extends GameScreen {
         }
         return true;
     }
+
+    @Override
+    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
 }

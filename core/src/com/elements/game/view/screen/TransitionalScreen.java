@@ -109,6 +109,11 @@ public class TransitionalScreen extends GameScreen {
         enterScreen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
+    @Override
+    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
     private enum Phase {
         FADE_OUT, FADE_IN
     }
